@@ -1,7 +1,12 @@
+<% const siteName = site_title(page) %>
+<% const favicon = profile_value('favicon') %>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><% if (page.title && page.title !== config.title) { %><%= page.title %> · <% } %><%= config.title %></title>
+<title><% if (page.title && page.title !== siteName) { %><%= page.title %> · <% } %><%= siteName %></title>
 <meta name="description" content="<%= config.description %>">
+<% if (favicon) { %>
+<link rel="icon" href="<%- url_for(favicon) %>">
+<% } %>
 <link rel="stylesheet" href="<%- url_for('/css/tokens.css') %>">
 <link rel="stylesheet" href="<%- url_for('/css/base.css') %>">
 <link rel="stylesheet" href="<%- url_for('/css/layout.css') %>">

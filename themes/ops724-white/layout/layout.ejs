@@ -1,9 +1,10 @@
+<% const bodyBackground = profile_value('body_background_color') %>
 <!DOCTYPE html>
 <html lang="<%= page_lang(page) %>">
   <head>
     <%- partial('partials/head') %>
   </head>
-  <body>
+  <body<% if (bodyBackground) { %> style="--page-background-color: <%= bodyBackground %>;"<% } %>>
     <div class="site-shell">
       <%- partial('partials/header') %>
       <main class="site-main">
