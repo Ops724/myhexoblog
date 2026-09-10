@@ -30,6 +30,15 @@
   text-transform: uppercase;
 }
 
+.post-meta a {
+  border-bottom: 1px solid transparent;
+}
+
+.post-meta a:hover,
+.post-meta a:focus-visible {
+  border-bottom-color: var(--line-strong);
+}
+
 .post-translation {
   margin: 1rem 0 0;
   font-family: var(--font-sans);

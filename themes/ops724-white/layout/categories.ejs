@@ -1,0 +1,7 @@
+<section class="content-section">
+  <header class="section-heading">
+    <h1><%= page.title %></h1>
+    <p class="section-copy"><%= __('ui.categories_intro') %></p>
+  </header>
+  <%- partial('partials/taxonomy-list', { items: taxonomy_items('categories', page_lang(page)) }) %>
+</section>
