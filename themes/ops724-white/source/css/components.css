@@ -1,0 +1,57 @@
+/*
+ * 组件样式：骨架阶段先放占位列表与文章壳，
+ * 后续阶段会被专门的列表组件、文章排版样式替换。
+ */
+
+.content-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.section-title {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.post-list-date {
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+.article-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.article-meta {
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.article-body p {
+  margin: 0 0 var(--space-3);
+}

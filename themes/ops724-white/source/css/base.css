@@ -1,0 +1,53 @@
+/*
+ * 基础样式：全站共用的最小规则。
+ * 只做重置与全局排版，具体页面与组件的样式放到 layout.css / components.css。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+a:hover,
+a:focus-visible {
+  border-bottom-color: var(--line-strong);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

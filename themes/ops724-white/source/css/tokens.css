@@ -1,0 +1,30 @@
+/*
+ * 设计令牌：整个主题的视觉常量都定义在这里。
+ * 其他样式文件只引用变量，不写死具体数值，方便日后整体调整风格。
+ */
+:root {
+  /* 颜色 */
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6f6f6f;
+  --line: #ececec;
+  --line-strong: #dcdcdc;
+
+  /* 布局宽度 */
+  --content-width: 720px;
+  --header-width: 960px;
+
+  /* 间距梯度 */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
+  --space-7: 6rem;
+
+  /* 字体 */
+  --font-serif: "Source Serif 4", "Noto Serif SC", serif;
+  --font-mono: "SFMono-Regular", "Menlo", monospace;
+  --font-sans: "Helvetica Neue", Arial, sans-serif;
+}
