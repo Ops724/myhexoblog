@@ -1,7 +1,7 @@
 'use strict';
 
-const { filterPosts, sortPosts, toArray } = require('../lib/content');
-const { toUrlPath } = require('../lib/paths');
+const { filterPosts, normalizeLang, sortPosts, toArray } = require('../lib/content');
+const { normalizeRoutePath, toUrlPath } = require('../lib/paths');
 const { toPlainText } = require('../lib/summary');
 
 /**
@@ -31,26 +31,45 @@ function buildText(post) {
   return [body, captions].filter(Boolean).join(' ').slice(0, MAX_TEXT_LENGTH);
 }
 
-function buildEntry(post) {
+function buildEntry(item) {
   return {
-    title: post.title || '',
-    url: `/${toUrlPath(post.path)}`,
-    section: post.section || '',
-    date: (post.date || new Date()).toISOString(),
-    text: buildText(post)
+    title: item.title || '',
+    url: `/${toUrlPath(item.path)}`,
+    section: item.section || 'page',
+    date: (item.updated || item.date || new Date()).toISOString(),
+    text: buildText(item)
   };
+}
+
+/** 搜索页、分类总览这类工具页不进索引。 */
+function isUtilityPage(page) {
+  return /(^|\/)search$/.test(normalizeRoutePath(page.path));
+}
+
+function collectEntries(locals, lang) {
+  const target = normalizeLang(lang);
+  const posts = sortPosts(filterPosts(locals.posts, target)).map(buildEntry);
+
+  // 独立页面里只收录「有正文」的，例如关于页；分类总览、标签总览没有正文，自然被排除
+  const pages = toArray(locals.pages)
+    .filter(page => normalizeLang(page.lang) === target)
+    .filter(page => !isUtilityPage(page))
+    .filter(page => buildText(page).length > 0)
+    .map(buildEntry);
+
+  return [...posts, ...pages];
 }
 
 hexo.extend.generator.register('search-index', function localizedSearchIndex(locals) {
   return INDEXES.map(index => {
-    const posts = sortPosts(filterPosts(locals.posts, index.lang));
+    const entries = collectEntries(locals, index.lang);
 
     return {
       path: index.path,
       data: JSON.stringify({
         lang: index.lang,
         generated: new Date().toISOString(),
-        entries: posts.map(buildEntry)
+        entries
       })
     };
   });
