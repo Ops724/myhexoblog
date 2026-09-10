@@ -28,7 +28,12 @@
     <nav class="site-nav" aria-label="Main">
       <% navItems.forEach(function (item) { %>
         <% const target = item.paths ? (item.paths[currentLang] || item.paths['zh-CN']) : item.path %>
-        <a href="<%- url_for(target) %>"><%= __(item.label_key) %></a>
+        <% const active = is_nav_active(page, target) %>
+        <a
+          href="<%- url_for(target) %>"
+          class="<%= active ? 'is-active' : '' %>"
+          <% if (active) { %>aria-current="page"<% } %>
+        ><%= __(item.label_key) %></a>
       <% }) %>
     </nav>
     <div class="site-header-locale">

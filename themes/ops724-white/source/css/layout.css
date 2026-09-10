@@ -9,6 +9,24 @@
   min-height: 100vh;
 }
 
+/* 跳转到正文：平时移出视口，键盘聚焦时出现在左上角 */
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: -9999px;
+  z-index: 20;
+  padding: 0.5rem 0.9rem;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  border-bottom: none;
+}
+
+.skip-link:focus {
+  left: var(--space-2);
+}
+
 .site-header {
   border-bottom: 1px solid var(--line);
 }
@@ -72,6 +90,10 @@
   font-size: 0.95rem;
 }
 
+.site-nav a.is-active {
+  border-bottom-color: var(--text);
+}
+
 .site-header-locale {
   display: flex;
   align-items: center;
@@ -102,4 +124,26 @@
   margin: 0 0 var(--space-2);
   padding: 0;
   list-style: none;
+}
+
+@media (max-width: 720px) {
+  .site-header-inner {
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-3) var(--space-2);
+  }
+
+  .site-header-inner.is-filled {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    font-size: 0.9rem;
+  }
+
+  .site-main {
+    padding: var(--space-5) var(--space-3);
+  }
 }
