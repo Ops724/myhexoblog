@@ -9,6 +9,8 @@ ui.channel_life: Life
 ui.channel_life_intro: Everyday notes, slower observations, and writing that does not need to solve a problem.
 ui.categories_intro: Browse posts by topic.
 ui.tags_intro: Tags support discovery, not primary navigation.
+ui.archives_title: Archives
+ui.archives_intro: A time-ordered index of everything I have written.
 ui.read_more: Read more
 ui.no_posts: No posts yet.
 ui.prev_page: Prev Page
