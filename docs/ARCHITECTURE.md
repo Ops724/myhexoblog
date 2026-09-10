@@ -70,6 +70,7 @@ myhexoblog/
 | 归档 | `/archives/` | `/en/archives/` |
 | 关于 | `/about/` | `/en/about/` |
 | 订阅源 | `/atom.xml` | `/en/atom.xml` |
+| 站点地图与爬虫规则 | `/sitemap.xml`、`/robots.txt` | 与中文共用一份，内含中英条目 |
 
 ## 五、内容模型
 
@@ -106,6 +107,10 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `lib/paginate.js` | 分页路由生成：第 1 页是根地址，第 N 页是 `page/N/` |
 | `lib/summary.js` | 从正文提取纯文本摘要，列表页与订阅源共用同一套截断规则 |
 | `lib/site-data.js` | 读取站点资料的双语字段，模板 helper 与订阅源共用 |
+| `lib/paths.js` | 站内路径归一化、中英路径互转与绝对地址拼接 |
+| `lib/channels.js` | 频道定义（语言 × 频道），列表生成器与站点地图共用 |
+| `lib/taxonomies.js` | 分类/标签的本地化路径与「哪些项真的有文章」的判断 |
+| `lib/xml.js` | XML 文本转义，订阅源与站点地图共用 |
 
 ### filters
 
@@ -121,6 +126,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `generators/localized-taxonomies.js` | `category`、`tag` | 分类与标签的中英详情页及分页 |
 | `generators/localized-archives.js` | `archive` | `/archives/`、`/en/archives/` |
 | `generators/localized-feed.js` | `feed` | `/atom.xml`、`/en/atom.xml` 两个 Atom 订阅源 |
+| `generators/localized-sitemap.js` | `sitemap` | `/sitemap.xml` 与 `/robots.txt` |
 
 ### helpers（模板里可调用）
 
@@ -132,6 +138,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `helpers/archive-groups.js` | `archive_groups` |
 | `helpers/navigation.js` | `is_nav_active` |
 | `helpers/site-data.js` | `profile_text`、`profile_value`、`site_title` |
+| `helpers/seo.js` | `absolute_url`、`page_description`、`page_image`、`route_exists` |
 
 ## 八、主题结构
 
@@ -204,3 +211,12 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 - **加一个页面**：在 `source/` 下建目录与 `index.md`，front-matter 里用 `layout` 指定模板。
 - **改配色或字体**：只改 `tokens.css`，组件样式都引用变量。
 - **改站点信息**：编辑 `source/_data/profile.yml`，不需要动主题代码。
+
+## 十二、SEO 与订阅
+
+- **订阅源**：`/atom.xml` 与 `/en/atom.xml`，由 `generators/localized-feed.js` 生成，摘要复用 `lib/summary.js`，最多 20 条。
+- **站点地图**：`/sitemap.xml` 与 `/robots.txt`，由 `generators/localized-sitemap.js` 生成；只收录真实存在的页面，分页地址不进地图。
+- **中英对照**：文章优先按 `translation_key` 配对，其它页面按 `en` 前缀配对；**只有确认存在对应版本时才输出 `hreflang`**，避免把英文首页误当成中文文章的英文版。
+- **分享卡片**：`head.ejs` 输出 Open Graph 与 Twitter Card；分享图默认取 `profile.yml` 的头像，文章用 front-matter 的 `image` 覆盖。
+- **页面描述**：由 `page_description` helper 分级取值（front-matter → 文章摘要 → 频道说明 → 正文摘要 → 站点描述），避免所有页面共用同一句描述。
+- **绝对地址**：以上功能都依赖 `_config.yml` 的 `url`，换成真实域名后才会输出正确链接。

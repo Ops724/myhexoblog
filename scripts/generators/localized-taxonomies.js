@@ -1,7 +1,7 @@
 'use strict';
 
-const { filterPosts, normalizeLang, sortPosts, toArray } = require('../lib/content');
 const { createPaginatedRoutes } = require('../lib/paginate');
+const { localizedTaxonomies } = require('../lib/taxonomies');
 
 /**
  * 分类与标签的详情页生成器。
@@ -14,51 +14,35 @@ const { createPaginatedRoutes } = require('../lib/paginate');
  * 只收录对应语言的文章；某个分类在某种语言下没有文章时，不会生成该语言的页面。
  */
 
-/** 给分类/标签的路径加上语言前缀。 */
-function localizedBasePath(item, lang) {
-  const base = String(item.path || '').replace(/^\/+|\/+$/g, '');
+const LANGS = ['zh-CN', 'en'];
 
-  if (normalizeLang(lang) !== 'en') {
-    return base;
-  }
-
-  return base ? `en/${base}` : 'en';
-}
-
-function createRoutes(item, layout, lang, perPage) {
-  const posts = sortPosts(filterPosts(item.posts, lang));
-
-  if (!posts.length) {
-    return [];
-  }
-
+function createRoutes(entry, layout, lang, perPage) {
   return createPaginatedRoutes({
-    posts,
-    base: `${localizedBasePath(item, lang)}/`,
+    posts: entry.posts,
+    base: entry.path,
     layout,
     perPage,
     data: {
       lang,
-      title: item.name,
-      taxonomy: item.name
+      title: entry.item.name,
+      taxonomy: entry.item.name
     }
   });
+}
+
+function buildRoutes(collection, layout, perPage) {
+  return LANGS.flatMap(lang => localizedTaxonomies(collection, lang)
+    .flatMap(entry => createRoutes(entry, layout, lang, perPage)));
 }
 
 hexo.extend.generator.register('category', function localizedCategories(locals) {
   const perPage = (this.config.category_generator || {}).per_page || this.config.per_page || 10;
 
-  return toArray(locals.categories).flatMap(category => [
-    ...createRoutes(category, ['category', 'list'], 'zh-CN', perPage),
-    ...createRoutes(category, ['category', 'list'], 'en', perPage)
-  ]);
+  return buildRoutes(locals.categories, ['category', 'list'], perPage);
 });
 
 hexo.extend.generator.register('tag', function localizedTags(locals) {
   const perPage = (this.config.tag_generator || {}).per_page || this.config.per_page || 10;
 
-  return toArray(locals.tags).flatMap(tag => [
-    ...createRoutes(tag, ['tag', 'list'], 'zh-CN', perPage),
-    ...createRoutes(tag, ['tag', 'list'], 'en', perPage)
-  ]);
+  return buildRoutes(locals.tags, ['tag', 'list'], perPage);
 });
