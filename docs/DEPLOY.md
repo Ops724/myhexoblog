@@ -16,6 +16,22 @@ Nginx 的 `root` 指向 `current` 软链。发布时先把文件全部上传到�
 
 ## 一、准备本地配置
 
+### 1. 把站点地址改成真实域名（必须）
+
+`_config.yml` 里的 `url` 决定 RSS、站点地图、canonical 与分享卡片里的绝对地址，现在是占位值 `http://example.com`：
+
+```yml
+url: https://你的域名
+root: /
+```
+
+- 站点部署在域名根目录（`https://域名/`）时，`root` 保持 `/`
+- 如果部署在子路径（例如 `https://域名/blog/`），`root` 要改成 `/blog/`
+
+改完提交到仓库：这是公开配置，属于框架的一部分。
+
+### 2. 填写服务器信息
+
 ```bash
 cp tools/deploy.local.example.sh tools/deploy.local.sh
 ```
@@ -58,6 +74,12 @@ sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d your-domain.example.com
 ```
 
+certbot 会自动配置续期定时任务，可以用下面的命令确认续期流程可用：
+
+```bash
+sudo certbot renew --dry-run
+```
+
 ## 三、日常发布
 
 ```bash
@@ -95,3 +117,23 @@ bash tools/deploy.sh rollback 20260910-153000    # 回滚到指定版本
 - **页面 404**：确认 Nginx 的 `root` 指向 `.../myhexoblog/current`，并且该软链存在。
 - **更新后仍是旧内容**：HTML 没有设置缓存，通常是浏览器缓存，强刷一次即可。
 - **想换域名**：改 Nginx 的 `server_name` 并重新申请证书。
+
+## 六、首次发布后的检查清单
+
+发布完成后按顺序过一遍：
+
+1. 首页与其他页面：`/`、`/en/`、`/life/`、`/photos/`、`/categories/`、`/tags/`、`/archives/`、`/about/`
+2. 文章页：随便点开一篇，确认正文、代码块、图片、上一篇/下一篇、译文入口
+3. 语言切换：中英互跳正常
+4. 订阅源：`/atom.xml` 与 `/en/atom.xml` 能打开，里面的链接是真实域名
+5. 站点地图与爬虫规则：`/sitemap.xml`、`/robots.txt`，确认 robots 里的 sitemap 地址是真实域名
+6. 站内搜索：`/search/` 搜几个中文关键词与英文关键词
+7. 分享卡片：把一篇文章的链接粘到微信或 Slack，确认能抓出标题、描述与分享图
+8. 证书续期：`sudo certbot renew --dry-run` 不报错
+9. 提交收录：把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 与百度站长平台
+
+补充说明：
+
+- **私有内容必须在本地构建时存在**：文章、相册、关于页、`profile.yml` 都在本地，服务器上只有生成好的静态文件，所以换一台机器发布前要先准备好这些内容。
+- **示例内容保护**：`source/` 里如果还有带 `sample: true` 的文件，发布会被中止；确实要发布演示内容时用 `DEPLOY_ALLOW_SAMPLES=1 npm run deploy`。
+- **搜索索引不需要额外步骤**：索引由 Hexo 生成器在构建时产出，和 `public/` 一起上传。
