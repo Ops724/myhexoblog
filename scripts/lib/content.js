@@ -49,9 +49,13 @@ function sortPosts(posts) {
   });
 }
 
-/** 频道归一化：只认 tech 与 life，其余归到 tech。 */
+/** 频道归一化：只认 tech、life 与 photos，其余归到 tech。 */
 function normalizeSection(value) {
-  return value === 'life' ? 'life' : 'tech';
+  if (value === 'life' || value === 'photos') {
+    return value;
+  }
+
+  return 'tech';
 }
 
 /**

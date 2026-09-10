@@ -1,5 +1,6 @@
 nav.home: 首页
 nav.life: 生活
+nav.photos: 相册
 nav.about: 关于
 nav.archives: 归档
 nav.categories: 分类
@@ -7,6 +8,12 @@ nav.tags: 标签
 ui.channel_tech: 技术笔记
 ui.channel_life: 生活
 ui.channel_life_intro: 生活记录、日常观察，和一些不急着给出答案的片段。
+ui.channel_photos: 相册
+ui.channel_photos_intro: 用照片留住那些比文字更直接的片刻。
+ui.no_albums: 还没有相册。
+ui.no_photos: 这个相册还没有照片。
+ui.photo_unit: 张照片
+ui.close: 关闭
 ui.categories_intro: 按主题浏览文章。
 ui.tags_intro: 标签用于辅助检索，不是主要导航。
 ui.archives_title: 归档

@@ -1,0 +1,30 @@
+<% const items = as_list(albums) %>
+<% if (items.length) { %>
+  <div class="album-grid">
+    <% items.forEach(function (album) { %>
+      <% const photos = album.photos || [] %>
+      <a class="album-card" href="<%- url_for(album.path) %>">
+        <span class="album-stack" aria-hidden="true">
+          <% if (photos[2]) { %>
+            <img class="album-stack-photo is-behind" src="<%- url_for(photos[2]) %>" alt="" loading="lazy">
+          <% } %>
+          <% if (photos[1]) { %>
+            <img class="album-stack-photo is-mid" src="<%- url_for(photos[1]) %>" alt="" loading="lazy">
+          <% } %>
+          <% if (photos[0]) { %>
+            <img class="album-stack-photo is-front" src="<%- url_for(photos[0]) %>" alt="" loading="lazy">
+          <% } %>
+        </span>
+        <h2><%= album.title %></h2>
+        <p class="album-card-meta">
+          <time datetime="<%= date_xml(album.date) %>"><%= date(album.date, config.date_format) %></time>
+          <% if (photos.length) { %>
+            <span class="album-card-count"><%= photos.length %> <%= __('ui.photo_unit') %></span>
+          <% } %>
+        </p>
+      </a>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state"><%= __('ui.no_albums') %></p>
+<% } %>

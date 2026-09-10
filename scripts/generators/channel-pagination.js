@@ -10,6 +10,7 @@ const { createPaginatedRoutes } = require('../lib/paginate');
  * 生成「语言 × 频道」四条列表路由：
  * - 技术：/ 与 /en/
  * - 生活：/life/ 与 /en/life/
+ * - 相册：/photos/ 与 /en/photos/
  *
  * 分页规则与实现见 scripts/lib/paginate.js，与分类、标签详情页共用。
  */
@@ -32,6 +33,22 @@ const CHANNELS = [
     layout: ['section', 'list'],
     titleKey: 'ui.channel_life',
     introKey: 'ui.channel_life_intro'
+  },
+  {
+    lang: 'zh-CN',
+    section: 'photos',
+    base: 'photos/',
+    layout: ['photos', 'list'],
+    titleKey: 'ui.channel_photos',
+    introKey: 'ui.channel_photos_intro'
+  },
+  {
+    lang: 'en',
+    section: 'photos',
+    base: 'en/photos/',
+    layout: ['photos', 'list'],
+    titleKey: 'ui.channel_photos',
+    introKey: 'ui.channel_photos_intro'
   }
 ];
 

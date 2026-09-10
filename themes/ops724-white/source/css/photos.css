@@ -1,0 +1,235 @@
+/*
+ * 相册样式：列表页的照片堆叠封面、相册页的照片平铺与灯箱。
+ * 沿用整站克制、留白的风格，颜色与间距都引用 tokens.css 中的变量。
+ */
+
+/* 列表页：每个相册用三张照片叠成一摞 */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--space-5) var(--space-3);
+  align-items: start;
+}
+
+.album-card {
+  display: block;
+  text-align: center;
+}
+
+.album-stack {
+  position: relative;
+  display: block;
+  width: 82%;
+  aspect-ratio: 4 / 3;
+  margin: 0 auto var(--space-3);
+}
+
+.album-stack-photo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.07);
+  transition: transform 180ms ease;
+}
+
+.album-stack-photo.is-behind {
+  z-index: 0;
+  transform: rotate(-6deg) translate(-7%, 2%) scale(0.9);
+}
+
+.album-stack-photo.is-mid {
+  z-index: 1;
+  transform: rotate(5deg) translate(6%, -1%) scale(0.96);
+}
+
+.album-stack-photo.is-front {
+  z-index: 2;
+  transform: rotate(-1.5deg);
+}
+
+.album-card:hover .album-stack-photo.is-behind,
+.album-card:focus-visible .album-stack-photo.is-behind {
+  transform: rotate(-7deg) translate(-10%, 4%) scale(0.88);
+}
+
+.album-card:hover .album-stack-photo.is-mid,
+.album-card:focus-visible .album-stack-photo.is-mid {
+  transform: rotate(7deg) translate(10%, -2%) scale(0.94);
+}
+
+.album-card:hover .album-stack-photo.is-front,
+.album-card:focus-visible .album-stack-photo.is-front {
+  transform: rotate(0deg);
+}
+
+.album-card h2 {
+  margin-bottom: 0.3rem;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.album-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4rem 0.7rem;
+  margin: 0 auto;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.album-card-count::before {
+  content: "·";
+  margin-right: 0.7rem;
+}
+
+/* 相册页：照片像散落的一叠拍立得 */
+.photo-pile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-4) 0;
+  margin: var(--space-4) 0 var(--space-5);
+  padding: var(--space-3) var(--space-2) 0;
+}
+
+.photo-pile .photo-figure {
+  position: relative;
+  flex: 0 1 clamp(180px, 30%, 260px);
+  min-width: 0;
+  margin: var(--space-2) calc(var(--space-1) * -0.8);
+  padding: 0.55rem 0.55rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 8px 20px rgba(0, 0, 0, 0.07);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.photo-pile .photo-figure:nth-child(4n + 1) {
+  transform: rotate(-2.6deg) translateY(0.5rem);
+}
+
+.photo-pile .photo-figure:nth-child(4n + 2) {
+  transform: rotate(2.2deg) translateY(-0.25rem);
+}
+
+.photo-pile .photo-figure:nth-child(4n + 3) {
+  transform: rotate(-1.2deg) translateY(0.9rem);
+}
+
+.photo-pile .photo-figure:nth-child(4n + 4) {
+  transform: rotate(1.8deg) translateY(0.1rem);
+}
+
+.photo-pile .photo-figure:hover,
+.photo-pile .photo-figure:focus-within {
+  z-index: 3;
+  transform: rotate(0deg) translateY(-0.55rem) scale(1.04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.photo-pile .photo-figure a {
+  display: block;
+  border: 0;
+  background: transparent;
+}
+
+.photo-pile .photo-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 0;
+  background: #ffffff;
+}
+
+.photo-pile .photo-figure figcaption {
+  margin: 0.5rem 0.2rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* 灯箱：点击照片后全屏查看，可用方向键切换 */
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  background: rgba(22, 22, 22, 0.92);
+}
+
+.photo-lightbox[hidden] {
+  display: none;
+}
+
+.photo-lightbox-figure {
+  max-width: min(94vw, 1100px);
+  margin: 0;
+  text-align: center;
+}
+
+.photo-lightbox img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 82vh;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+}
+
+.photo-lightbox figcaption {
+  margin-top: var(--space-2);
+  color: #d6d6d6;
+  font-size: 0.95rem;
+}
+
+.photo-lightbox-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.photo-lightbox-close:hover,
+.photo-lightbox-close:focus-visible {
+  border-color: #ffffff;
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .photo-pile .photo-figure {
+    flex-basis: 44%;
+    margin: var(--space-2) calc(var(--space-1) * -0.6);
+  }
+
+  .photo-lightbox {
+    padding: var(--space-2);
+  }
+}

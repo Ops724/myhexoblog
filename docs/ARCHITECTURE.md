@@ -61,8 +61,10 @@ myhexoblog/
 | --- | --- | --- |
 | 技术频道（首页） | `/` | `/en/` |
 | 生活频道 | `/life/` | `/en/life/` |
+| 相册频道 | `/photos/` | `/en/photos/` |
 | 列表分页 | `/page/2/` | `/en/page/2/` |
 | 文章详情 | `/posts/:slug/` | `/en/posts/:slug/` |
+| 相册详情 | `/photos/:slug/` | `/en/photos/:slug/` |
 | 分类总览 / 详情 | `/categories/`、`/categories/:name/` | `/en/categories/`、`/en/categories/:name/` |
 | 标签总览 / 详情 | `/tags/`、`/tags/:name/` | `/en/tags/`、`/en/tags/:name/` |
 | 归档 | `/archives/` | `/en/archives/` |
@@ -79,6 +81,10 @@ myhexoblog/
 | `permalink` | 建议 | 中文 `/posts/<slug>/`，英文 `/en/posts/<slug>/` |
 | `translation_key` | 否 | 中英译文配对标识 |
 | `sample` | 否 | 标记为示例内容，发布前检查会拦截 |
+| `photos` | 相册专用 | 照片地址数组，配合 `layout: album` 使用 |
+| `captions` | 相册专用 | 与 `photos` 一一对应的说明文字 |
+
+相册仍然是一篇文章：`section: photos`、`layout: album`，加上 `photos` 与 `captions`，因此它照样参与语言过滤、译文配对与上一篇/下一篇。
 
 ## 六、双语是怎么实现的
 
@@ -108,7 +114,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 
 | 文件 | 覆盖谁 | 产出 |
 | --- | --- | --- |
-| `generators/channel-pagination.js` | `index` | `/`、`/en/`、`/life/`、`/en/life/` 及分页 |
+| `generators/channel-pagination.js` | `index` | `/`、`/en/`（技术）、`/life/`、`/en/life/`（生活）、`/photos/`、`/en/photos/`（相册）及分页 |
 | `generators/localized-taxonomies.js` | `category`、`tag` | 分类与标签的中英详情页及分页 |
 | `generators/localized-archives.js` | `archive` | `/archives/`、`/en/archives/` |
 
@@ -136,11 +142,13 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `layout/categories.ejs`、`tags.ejs` | 分类与标签总览页 |
 | `layout/archives.ejs` | 归档页，按年月分组 |
 | `layout/post.ejs` | 文章页 |
+| `layout/photos.ejs` | 相册列表页，照片堆叠封面 |
+| `layout/album.ejs` | 相册详情页，照片平铺加灯箱 |
 | `layout/page.ejs` | 普通页面（关于页等） |
 
 ### partials
 
-`head`、`header`、`footer`、`language-switcher`、`post-list`、`post-meta`、`list-pagination`、`pagination`（上一篇/下一篇）、`translation-link`、`taxonomy-list`。
+`head`、`header`、`footer`、`page-heading`、`language-switcher`、`post-list`、`post-meta`、`list-pagination`、`pagination`（上一篇/下一篇）、`translation-link`、`taxonomy-list`、`album-list`、`photo-pile`。
 
 ### 样式分层
 
@@ -151,6 +159,9 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `layout.css` | 页面骨架：页头、正文容器、页脚、响应式断点 |
 | `components.css` | 列表、分页、归档、分类标签、上一篇/下一篇等组件 |
 | `content.css` | 文章排版、代码高亮配色、图片与引用 |
+| `photos.css` | 相册：堆叠封面、照片平铺与灯箱 |
+
+浏览器端脚本只有一处：`source/js/photos.js`，负责相册的灯箱查看（Esc 关闭、方向键切换、焦点回收）。
 
 ## 九、数据文件
 
@@ -163,6 +174,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 ## 十、常见扩展
 
 - **加一个频道**：在 `generators/channel-pagination.js` 的 `CHANNELS` 里加一条，并补上界面文案与导航项。
+- **加一个相册**：在 `source/_posts/zh|en/` 下新建一篇文章，写 `section: photos`、`layout: album`，把照片地址与说明分别写进 `photos` 与 `captions`。
 - **加一个界面文案**：在主题的 `languages/zh-CN.yml` 与 `en.yml` 同时加键，模板里用 `__('key')`。
 - **加一个页面**：在 `source/` 下建目录与 `index.md`，front-matter 里用 `layout` 指定模板。
 - **改配色或字体**：只改 `tokens.css`，组件样式都引用变量。

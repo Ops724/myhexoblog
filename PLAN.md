@@ -145,7 +145,7 @@ myhexoblog/
 | --- | --- | --- |
 | 首页（技术频道） | `/` | `/en/` |
 | 生活频道 | `/life/` | `/en/life/` |
-| 相册频道（V1 之外） | `/photos/` | `/en/photos/` |
+| 相册频道 | `/photos/` | `/en/photos/` |
 | 文章详情 | `/posts/:slug/` | `/en/posts/:slug/` |
 | 关于 | `/about/` | `/en/about/` |
 | 分类总览 | `/categories/` | `/en/categories/` |
@@ -232,7 +232,7 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 | 分类总览 / 详情 | 按语言过滤、显示数量、详情页分页 | P1 |
 | 标签总览 / 详情 | 轻量列表，不做拥挤标签云 | P1 |
 | 归档 | 按年/月分组，只显示当前语言 | P1 |
-| 相册 | 相册列表与照片浏览交互 | V1 之外（见第 7 节末） |
+| 相册 | 相册列表（堆叠封面）与照片浏览（灯箱） | P1 |
 | 语言切换 | 页头提供「中 / EN」，文章页可跳译文 | P0 |
 
 ### 5.3 组件清单
@@ -496,7 +496,23 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 - 建议分支：`docs/handbook`
 - 建议提交：`文档: 补齐项目文档与提交学习索引`
 
-### 阶段 11：旧站内容迁移（后续单独评估）
+### 阶段 11：相册频道（新增）
+
+- 目标：实现双语相册频道——列表页用照片堆叠封面，相册页用照片平铺加灯箱查看。
+- 背景：相册最初排在 V1 之外，主体站点稳定后决定补上，让站点更完整。
+- 任务：
+  - [ ] `normalizeSection` 支持 `photos`，频道生成器新增 `/photos/` 与 `/en/photos/`。
+  - [ ] 相册仍然是一篇文章：`section: photos`、`layout: album`、`photos` / `captions` 字段，详情页沿用文章地址。
+  - [ ] 新增 `photos.ejs`（列表）、`album.ejs`（详情）、`album-list.ejs` 与 `photo-pile.ejs` 组件。
+  - [ ] 新增 `photos.css` 与无依赖灯箱 `photos.js`（Esc 关闭、方向键切换、焦点回收）。
+  - [ ] 导航加入相册入口，导航高亮支持相册频道与相册文章。
+  - [ ] `examples/` 提供中英示例相册，用于验证频道与交互。
+- 涉及文件：`scripts/lib/content.js`、`scripts/generators/channel-pagination.js`、`scripts/helpers/navigation.js`、主题 `layout/photos.ejs`、`layout/album.ejs`、`layout/partials/album-list.ejs`、`layout/partials/photo-pile.ejs`、`source/css/photos.css`、`source/js/photos.js`、`languages/*`、`source/_data/navigation.yml`。
+- 验收：`/photos/`、`/en/photos/` 与相册详情页均可访问；封面堆叠、照片平铺与灯箱交互正常；首页与生活频道不受影响。
+- 建议分支：`feat/photos`
+- 建议提交：`新增: 实现双语相册频道`
+
+### 阶段 12：旧站内容迁移（后续单独评估）
 
 - 目标：把旧站真实内容迁到新站，安全切换。
 - 任务：
@@ -509,10 +525,11 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 
 ### V1 之外（后续可选）
 
-以下内容已明确不进入 V1，待主体站点稳定后单独评估，届时各补一份小方案：
+以下内容已明确不在当前范围内，待主体站点稳定后单独评估，届时各补一份小方案：
 
-- 相册频道：复用「文章 + 频道 + 布局」模型实现——新增 `section: photos`、`layout: album`、`photos`/`captions` 字段，以及 `photos.ejs`、`album.ejs`、`photos.css`、`photos.js`；`/photos/`、`/en/photos/` 由频道生成器顺带产出。
 - 评论、站内搜索、RSS、站点统计。
+
+相册频道最初也在这个清单里，后在阶段 11 补充实现。
 
 ---
 
@@ -531,7 +548,8 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 | 8 | `style/polish` | 样式: 完善交互反馈与移动端表现 |
 | 9 | `chore/deploy-ecs` | 构建: 建立 ECS 部署与发布流程 |
 | 10 | `docs/handbook` | 文档: 补齐项目文档与提交学习索引 |
-| 11 | `feat/content-migration` | 新增: 迁移旧站内容并完成校验 |
+| 11 | `feat/photos` | 新增: 实现双语相册频道 |
+| 12 | `feat/content-migration` | 新增: 迁移旧站内容并完成校验 |
 
 ---
 
@@ -541,7 +559,7 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 | --- | --- | --- |
 | 主题名 | 新主题叫什么名字 | 已确认：沿用 `ops724-white` |
 | 逻辑落点 | 路由生成器放主题还是站点 | 已确认：放站点 `scripts/`（见 4.2） |
-| 相册频道 | 是否纳入 V1 | 已确认：不纳入 V1，归入「V1 之外」清单 |
+| 相册频道 | 是否纳入 V1 | 最初不纳入，阶段 11 已补充实现 |
 | 私有内容层 | 公开仓库如何承载私有内容 | 已确认：公开代码 + `examples/` 示例 + `.gitignore` 排除真实内容（见 4.8），旧式双层方案已否决 |
 | 仓库归属 | 新仓库是否推到远程、是否公开 | 已确认：推送到 GitHub 公开管理代码，内容不公开 |
 | 私有内容备份 | 内容不在 Git 中，存在丢失风险 | 上线前落实备份方案（Time Machine + 异地副本） |
@@ -553,6 +571,6 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 
 ## 10. 下一步
 
-1. 方案已定稿：主题名 `ops724-white`；路由逻辑放站点 `scripts/`；相册不纳入 V1；代码公开、内容私有。
+1. 方案已定稿：主题名 `ops724-white`；路由逻辑放站点 `scripts/`；代码公开、内容私有；相册在阶段 11 补充实现。
 2. 从「阶段 0」开始执行：先建仓库与工程约定，再进入主题开发。
 3. 每个阶段开始前，先说明这一阶段要学的概念和代码思路；结束后给出中文提交与复盘说明。

@@ -34,6 +34,7 @@ Hexo 站点分三层，改动前先判断属于哪一层：
 - 公开：框架、主题、文档、`examples/` 中的示例内容。
 - 私有：真实文章、个人图片、关于页、`source/_data/profile.yml`、`source/_data/social.yml`，由 `.gitignore` 排除。
 - 初始化本地示例内容：`npm run content:init`（只复制，不覆盖）。
+- 注意：`content:init` 只补缺失文件，删除示例内容之后再次执行会把示例补回来。
 - 每次提交前用 `git status` 检查，确认没有把私有内容加入暂存区。
 - 私有内容不在 Git 中，没有版本保护，需自行备份。
 

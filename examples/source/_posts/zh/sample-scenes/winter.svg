@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Winter placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2f4f5"/>
+      <stop offset="1" stop-color="#d3dce0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="600" cy="270" r="110" fill="none" stroke="#b9c6cc" stroke-width="2" opacity="0.8"/>
+  <circle cx="600" cy="270" r="42" fill="#dfe7ea" opacity="0.9"/>
+  <rect x="0" y="620" width="1200" height="180" fill="#e8edef"/>
+  <path d="M0 640 Q 300 600 650 635 T 1200 625" fill="none" stroke="#c3d0d5" stroke-width="2" opacity="0.8"/>
+</svg>
