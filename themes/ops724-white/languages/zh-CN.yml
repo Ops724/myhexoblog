@@ -14,6 +14,7 @@ ui.no_albums: 还没有相册。
 ui.no_photos: 这个相册还没有照片。
 ui.photo_unit: 张照片
 ui.close: 关闭
+ui.subscribe: RSS
 ui.categories_intro: 按主题浏览文章。
 ui.tags_intro: 标签用于辅助检索，不是主要导航。
 ui.archives_title: 归档
