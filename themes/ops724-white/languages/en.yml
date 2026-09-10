@@ -6,3 +6,5 @@ nav.categories: Categories
 nav.tags: Tags
 ui.latest_posts: Latest Posts
 ui.no_posts: No posts yet.
+ui.language_zh: 中
+ui.language_en: EN

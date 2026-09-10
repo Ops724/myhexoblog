@@ -1,0 +1,13 @@
+<% const currentLang = page_lang(page) %>
+<div class="language-switcher">
+  <a
+    href="<%- url_for(localized_page_url(page, 'zh-CN')) %>"
+    class="<%= currentLang === 'zh-CN' ? 'is-active' : '' %>"
+    <% if (currentLang === 'zh-CN') { %>aria-current="true"<% } %>
+  ><%= __('ui.language_zh') %></a>
+  <a
+    href="<%- url_for(localized_page_url(page, 'en')) %>"
+    class="<%= currentLang === 'en' ? 'is-active' : '' %>"
+    <% if (currentLang === 'en') { %>aria-current="true"<% } %>
+  ><%= __('ui.language_en') %></a>
+</div>

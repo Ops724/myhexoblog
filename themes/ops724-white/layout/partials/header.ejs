@@ -15,5 +15,8 @@
       <a href="<%- url_for('/') %>"><%= __('nav.home') %></a>
       <a href="<%- url_for('/about/') %>"><%= __('nav.about') %></a>
     </nav>
+    <div class="site-header-locale">
+      <%- partial('partials/language-switcher') %>
+    </div>
   </div>
 </header>

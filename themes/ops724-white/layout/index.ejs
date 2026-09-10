@@ -1,4 +1,4 @@
-<% const posts = page.posts ? page.posts.toArray() : [] %>
+<% const posts = as_list(page.posts) %>
 <section class="content-section">
   <h2 class="section-title"><%= __('ui.latest_posts') %></h2>
   <% if (posts.length) { %>
