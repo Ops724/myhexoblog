@@ -1,0 +1,16 @@
+<% const posts = page.posts ? page.posts.toArray() : [] %>
+<section class="content-section">
+  <h2 class="section-title"><%= __('ui.latest_posts') %></h2>
+  <% if (posts.length) { %>
+    <ul class="post-list">
+      <% posts.forEach(function (post) { %>
+        <li class="post-list-item">
+          <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+          <span class="post-list-date"><%= date(post.date, config.date_format) %></span>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p class="empty-state"><%= __('ui.no_posts') %></p>
+  <% } %>
+</section>
