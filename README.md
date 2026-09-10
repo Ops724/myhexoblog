@@ -60,21 +60,21 @@ npx hexo new post "文章标题"   # 生成到 source/_posts/，再移动到 zh/
 
 ```yaml
 ---
-title: 四季小景
+title: 城市夜景
 date: 2026-09-09 09:00:00
 lang: zh-CN
 section: photos
 layout: album
-permalink: /photos/sample-scenes/
-translation_key: sample-scenes
+permalink: /photos/city-lights/
+translation_key: city-lights
 photos:
-  - /photos/sample-scenes/spring.svg
+  - /images/albums/city-lights/20260101_bund.webp
 captions:
-  - 初春，树影落在墙边
+  - 元旦，外滩的灯
 ---
 ```
 
-照片可以放进与文章同名的目录（构建时会复制到相册地址下），也可以上传到 `source/images/` 后用绝对路径引用。相册列表在 `/photos/` 与 `/en/photos/`，点开后照片平铺展示，点击可用灯箱查看，支持 Esc 关闭与左右方向键切换。
+照片有两种放法：放在与文章同名的目录里（构建时会复制到相册地址下），或者上传到 `source/images/albums/<相册名>/` 再用绝对路径引用。相册列表在 `/photos/` 与 `/en/photos/`，点开后照片平铺展示，点击可用灯箱查看，支持 Esc 关闭与左右方向键切换。
 
 ## 目录结构
 
