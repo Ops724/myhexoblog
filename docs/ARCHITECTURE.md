@@ -71,6 +71,7 @@ myhexoblog/
 | 关于 | `/about/` | `/en/about/` |
 | 订阅源 | `/atom.xml` | `/en/atom.xml` |
 | 站点地图与爬虫规则 | `/sitemap.xml`、`/robots.txt` | 与中文共用一份，内含中英条目 |
+| 站内搜索 | `/search/` | `/en/search/` |
 
 ## 五、内容模型
 
@@ -155,6 +156,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `layout/post.ejs` | 文章页 |
 | `layout/photos.ejs` | 相册列表页，照片堆叠封面 |
 | `layout/album.ejs` | 相册详情页，照片平铺加灯箱 |
+| `layout/search.ejs` | 搜索页：输入框、状态提示与结果列表 |
 | `layout/page.ejs` | 普通页面（关于页等） |
 
 ### partials
@@ -172,7 +174,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `content.css` | 文章排版、代码高亮配色、图片与引用 |
 | `photos.css` | 相册：堆叠封面、照片平铺与灯箱 |
 
-浏览器端脚本只有一处：`source/js/photos.js`，负责相册的灯箱查看（Esc 关闭、方向键切换、焦点回收）。
+浏览器端脚本有两处：`source/js/photos.js`（相册灯箱：Esc 关闭、方向键切换、焦点回收）与 `source/js/search.js`（站内搜索：调用 Pagefind API 并自行渲染结果）。
 
 ## 九、数据文件
 
@@ -220,3 +222,11 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 - **分享卡片**：`head.ejs` 输出 Open Graph 与 Twitter Card；分享图默认取 `profile.yml` 的头像，文章用 front-matter 的 `image` 覆盖。
 - **页面描述**：由 `page_description` helper 分级取值（front-matter → 文章摘要 → 频道说明 → 正文摘要 → 站点描述），避免所有页面共用同一句描述。
 - **绝对地址**：以上功能都依赖 `_config.yml` 的 `url`，换成真实域名后才会输出正确链接。
+
+## 十三、站内搜索
+
+- **方案**：Pagefind 在构建产物 `public/` 上建立静态索引，输出到 `public/pagefind/`，前端按需加载，不需要后端服务。
+- **构建流程**：`npm run build:full` = 生成站点 + `pagefind --site public`；`tools/deploy.sh` 的构建步骤也会在生成之后建索引。本地 `hexo server` 不会自动建索引，需要先跑一次 `build:full`。
+- **索引范围**：Pagefind 只索引带 `data-pagefind-body` 的页面，本项目在 `post.ejs`、`album.ejs`、`page.ejs` 的 `<article>` 上加了该属性，所以列表页、分类标签页、归档页、搜索页与导航都不会进索引。
+- **语言隔离**：索引只有一份，`layout.ejs` 在 `<body>` 上输出 `data-pagefind-filter="language[lang]"`，搜索时 `search.js` 按当前语言传过滤条件（值为小写的 `zh-cn` / `en`，Pagefind 会把过滤值规范化成小写）。
+- **界面**：不使用 Pagefind 自带 UI，`layout/search.ejs` 提供输入框与结果容器，`search.js` 调用 `pagefind.search()` 后自行渲染，样式与整站一致。

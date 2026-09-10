@@ -17,6 +17,7 @@ set -euo pipefail
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LOCAL_CONFIG="$PROJECT_ROOT/tools/deploy.local.sh"
 HEXO_BIN="$PROJECT_ROOT/node_modules/.bin/hexo"
+PAGEFIND_BIN="$PROJECT_ROOT/node_modules/.bin/pagefind"
 
 info() { printf '\033[36m%s\033[0m\n' "$1"; }
 fail() { printf '\033[31m%s\033[0m\n' "$1" >&2; exit 1; }
@@ -64,6 +65,14 @@ build_site() {
 
   info "清理并构建静态站点"
   (cd "$PROJECT_ROOT" && "$HEXO_BIN" clean && "$HEXO_BIN" generate)
+
+  # 搜索索引必须在站点生成之后建立，否则线上搜索页没有数据
+  if [[ -x "$PAGEFIND_BIN" ]]; then
+    info "建立站内搜索索引"
+    (cd "$PROJECT_ROOT" && "$PAGEFIND_BIN" --site public -q)
+  else
+    fail "找不到 $PAGEFIND_BIN，请先执行 npm install。"
+  fi
 }
 
 deploy_site() {
