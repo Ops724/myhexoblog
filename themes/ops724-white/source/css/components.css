@@ -99,6 +99,70 @@
   font-size: 0.8rem;
 }
 
+/* 站内搜索：输入框、状态提示与结果列表 */
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.search-label {
+  position: absolute;
+  left: -9999px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  background: #ffffff;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+}
+
+.search-input:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.search-status {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.search-result {
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--line);
+}
+
+.search-result-title {
+  margin-bottom: 0.35rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+}
+
+.search-result-excerpt {
+  color: #505050;
+}
+
+.search-result-excerpt mark {
+  color: inherit;
+  background: #f4efd0;
+}
+
 /* 归档页：按年、月分组的时间线 */
 .archive-groups {
   display: grid;

@@ -88,8 +88,14 @@ function collectEntries(locals) {
     add(lang === 'en' ? 'en/archives/' : 'archives/', newestPost(posts));
   });
 
-  // 独立页面：关于、分类与标签总览等
-  toArray(locals.pages).forEach(page => add(page.path, page.updated || page.date));
+  // 独立页面：关于、分类与标签总览等；搜索页是工具页，不收录
+  toArray(locals.pages).forEach(page => {
+    const path = normalizeRoutePath(page.path);
+
+    if (/(^|\/)search$/.test(path)) return;
+
+    add(page.path, page.updated || page.date);
+  });
 
   return { entries, pairs };
 }

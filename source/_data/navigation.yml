@@ -20,6 +20,10 @@ items:
     paths:
       zh-CN: /tags/
       en: /en/tags/
+  - label_key: nav.search
+    paths:
+      zh-CN: /search/
+      en: /en/search/
   - label_key: nav.archives
     paths:
       zh-CN: /archives/

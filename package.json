@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "build": "hexo generate",
+    "build:full": "npm run build && npm run search:index",
     "clean": "hexo clean",
     "content:init": "node tools/content-init.mjs",
     "deploy": "bash tools/deploy.sh deploy",
     "deploy:list": "bash tools/deploy.sh list",
     "deploy:rollback": "bash tools/deploy.sh rollback",
+    "search:index": "pagefind --site public",
     "server": "hexo server"
   },
   "hexo": {
@@ -23,5 +25,8 @@
     "hexo-renderer-ejs": "^2.0.0",
     "hexo-renderer-marked": "^7.0.0",
     "hexo-server": "^3.0.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }

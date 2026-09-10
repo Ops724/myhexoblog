@@ -2,6 +2,7 @@ nav.home: 首页
 nav.life: 生活
 nav.photos: 相册
 nav.about: 关于
+nav.search: 搜索
 nav.archives: 归档
 nav.categories: 分类
 nav.tags: 标签
@@ -15,6 +16,12 @@ ui.no_photos: 这个相册还没有照片。
 ui.photo_unit: 张照片
 ui.close: 关闭
 ui.subscribe: RSS
+ui.search_hint: 输入关键词，搜索站内的文章与相册。
+ui.search_placeholder: 输入关键词…
+ui.search_loading: 正在搜索…
+ui.search_empty: 没有找到匹配的内容。
+ui.search_error: 搜索暂时不可用，索引可能还没有生成。
+ui.search_noscript: 搜索需要开启 JavaScript。
 ui.categories_intro: 按主题浏览文章。
 ui.tags_intro: 标签用于辅助检索，不是主要导航。
 ui.archives_title: 归档

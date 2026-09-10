@@ -2,6 +2,7 @@ nav.home: Home
 nav.life: Life
 nav.photos: Photos
 nav.about: About
+nav.search: Search
 nav.archives: Archives
 nav.categories: Categories
 nav.tags: Tags
@@ -15,6 +16,12 @@ ui.no_photos: This album has no photos yet.
 ui.photo_unit: photos
 ui.close: Close
 ui.subscribe: RSS
+ui.search_hint: Type a keyword to search posts and albums.
+ui.search_placeholder: Type a keyword…
+ui.search_loading: Searching…
+ui.search_empty: No matching content.
+ui.search_error: Search is unavailable right now — the index may not be built yet.
+ui.search_noscript: Search requires JavaScript.
 ui.categories_intro: Browse posts by topic.
 ui.tags_intro: Tags support discovery, not primary navigation.
 ui.archives_title: Archives
