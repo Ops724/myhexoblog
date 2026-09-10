@@ -7,6 +7,8 @@ nav.tags: Tags
 ui.channel_tech: Tech Notes
 ui.channel_life: Life
 ui.channel_life_intro: Everyday notes, slower observations, and writing that does not need to solve a problem.
+ui.categories_intro: Browse posts by topic.
+ui.tags_intro: Tags support discovery, not primary navigation.
 ui.read_more: Read more
 ui.no_posts: No posts yet.
 ui.prev_page: Prev Page
