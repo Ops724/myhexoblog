@@ -5,6 +5,7 @@ lang: en
 section: tech
 permalink: /en/posts/welcome/
 translation_key: welcome
+sample: true
 categories:
   - Tools
 tags:

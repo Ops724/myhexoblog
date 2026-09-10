@@ -5,6 +5,7 @@ lang: en
 section: tech
 permalink: /en/posts/why-hexo/
 translation_key: why-hexo
+sample: true
 categories:
   - Tools
 tags:

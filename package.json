@@ -6,7 +6,9 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "content:init": "node tools/content-init.mjs",
-    "deploy": "hexo deploy",
+    "deploy": "bash tools/deploy.sh deploy",
+    "deploy:list": "bash tools/deploy.sh list",
+    "deploy:rollback": "bash tools/deploy.sh rollback",
     "server": "hexo server"
   },
   "hexo": {

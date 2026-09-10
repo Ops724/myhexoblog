@@ -5,6 +5,7 @@ lang: en
 section: life
 permalink: /en/posts/daily-note/
 translation_key: daily-note
+sample: true
 categories:
   - Notes
 tags:
