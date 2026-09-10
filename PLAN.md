@@ -430,6 +430,7 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
 - 目标：中英文归档按年/月分组展示。
 - 任务：
   - [ ] 实现本地化归档生成器。
+  - [ ] 归档只保留 `/archives/` 与 `/en/archives/` 两个入口，不再生成按年月的子路由。
   - [ ] 实现 `archives.ejs` 与年月分组 helper。
   - [ ] 创建中英文归档页面入口。
 - 涉及文件：`scripts/generators/localized-archives.js`、`scripts/helpers/archive-groups.js`、主题 `layout/archives.ejs`、`source` 下页面。
