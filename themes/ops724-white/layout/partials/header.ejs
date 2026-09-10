@@ -11,9 +11,12 @@
         <% } %>
       </div>
     </div>
+    <% const currentLang = page_lang(page) %>
+    <% const langPrefix = currentLang === 'en' ? '/en' : '' %>
     <nav class="site-nav" aria-label="Main">
-      <a href="<%- url_for('/') %>"><%= __('nav.home') %></a>
-      <a href="<%- url_for('/about/') %>"><%= __('nav.about') %></a>
+      <a href="<%- url_for(`${langPrefix}/`) %>"><%= __('nav.home') %></a>
+      <a href="<%- url_for(`${langPrefix}/life/`) %>"><%= __('nav.life') %></a>
+      <a href="<%- url_for(`${langPrefix}/about/`) %>"><%= __('nav.about') %></a>
     </nav>
     <div class="site-header-locale">
       <%- partial('partials/language-switcher') %>

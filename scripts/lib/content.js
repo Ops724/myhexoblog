@@ -50,17 +50,31 @@ function sortPosts(posts) {
 }
 
 /** 只保留指定语言的文章。 */
-function postsByLang(collection, lang) {
-  const target = normalizeLang(lang);
+function normalizeSection(value) {
+  return value === 'life' ? 'life' : 'tech';
+}
 
-  return toArray(collection).filter(post => normalizeLang(post.lang) === target);
+/**
+ * 按语言与频道筛选文章。
+ * lang 必填；section 省略时表示不限频道。
+ */
+function filterPosts(collection, lang, section) {
+  const target = normalizeLang(lang);
+  const targetSection = section ? normalizeSection(section) : null;
+
+  return toArray(collection).filter(post => {
+    if (normalizeLang(post.lang) !== target) return false;
+    if (targetSection && normalizeSection(post.section) !== targetSection) return false;
+    return true;
+  });
 }
 
 module.exports = {
   DEFAULT_LANG,
   SUPPORTED_LANGS,
+  filterPosts,
   normalizeLang,
-  postsByLang,
+  normalizeSection,
   sortPosts,
   toArray
 };

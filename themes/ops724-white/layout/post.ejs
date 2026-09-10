@@ -1,7 +1,7 @@
-<article class="article">
+<article class="article article-post">
   <header class="article-header">
     <h1><%= page.title %></h1>
-    <p class="article-meta"><%= date(page.date, config.date_format) %></p>
+    <%- partial('partials/post-meta') %>
   </header>
   <div class="article-body">
     <%- page.content %>

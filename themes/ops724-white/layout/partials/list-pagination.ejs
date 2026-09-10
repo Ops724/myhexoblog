@@ -1,0 +1,17 @@
+<% if (page.total > 1) { %>
+  <nav class="list-pagination" aria-label="Pagination">
+    <% if (page.prev_link) { %>
+      <a class="list-pagination-link" rel="prev" href="<%- url_for(page.prev_link) %>"><%= __('ui.prev_page') %></a>
+    <% } else { %>
+      <span class="list-pagination-link is-disabled"><%= __('ui.prev_page') %></span>
+    <% } %>
+
+    <span class="list-pagination-status"><%= page.current %> / <%= page.total %></span>
+
+    <% if (page.next_link) { %>
+      <a class="list-pagination-link" rel="next" href="<%- url_for(page.next_link) %>"><%= __('ui.next_page') %></a>
+    <% } else { %>
+      <span class="list-pagination-link is-disabled"><%= __('ui.next_page') %></span>
+    <% } %>
+  </nav>
+<% } %>
