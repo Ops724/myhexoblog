@@ -69,6 +69,7 @@ myhexoblog/
 | 标签总览 / 详情 | `/tags/`、`/tags/:name/` | `/en/tags/`、`/en/tags/:name/` |
 | 归档 | `/archives/` | `/en/archives/` |
 | 关于 | `/about/` | `/en/about/` |
+| 订阅源 | `/atom.xml` | `/en/atom.xml` |
 
 ## 五、内容模型
 
@@ -103,6 +104,8 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | --- | --- |
 | `lib/content.js` | 语言与频道归一化、按语言频道过滤、排序、查找译文 |
 | `lib/paginate.js` | 分页路由生成：第 1 页是根地址，第 N 页是 `page/N/` |
+| `lib/summary.js` | 从正文提取纯文本摘要，列表页与订阅源共用同一套截断规则 |
+| `lib/site-data.js` | 读取站点资料的双语字段，模板 helper 与订阅源共用 |
 
 ### filters
 
@@ -117,6 +120,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `generators/channel-pagination.js` | `index` | `/`、`/en/`（技术）、`/life/`、`/en/life/`（生活）、`/photos/`、`/en/photos/`（相册）及分页 |
 | `generators/localized-taxonomies.js` | `category`、`tag` | 分类与标签的中英详情页及分页 |
 | `generators/localized-archives.js` | `archive` | `/archives/`、`/en/archives/` |
+| `generators/localized-feed.js` | `feed` | `/atom.xml`、`/en/atom.xml` 两个 Atom 订阅源 |
 
 ### helpers（模板里可调用）
 

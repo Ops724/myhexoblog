@@ -1,12 +1,13 @@
 <% const social = site.data.social || {} %>
 <% const socialLinks = social.links || [] %>
+<% const currentLang = page_lang(page) %>
+<% const feedPath = currentLang === 'en' ? '/en/atom.xml' : '/atom.xml' %>
 <footer class="site-footer">
-  <% if (socialLinks.length) { %>
-    <ul class="social-links">
-      <% socialLinks.forEach(function (link) { %>
-        <li><a href="<%- link.url %>" rel="noopener"><%= link.label %></a></li>
-      <% }) %>
-    </ul>
-  <% } %>
+  <ul class="social-links">
+    <% socialLinks.forEach(function (link) { %>
+      <li><a href="<%- link.url %>" rel="noopener"><%= link.label %></a></li>
+    <% }) %>
+    <li><a href="<%- url_for(feedPath) %>" rel="alternate" type="application/atom+xml"><%= __('ui.subscribe') %></a></li>
+  </ul>
   <p>© <%= date(new Date(), 'YYYY') %> <%= site_title(page) %></p>
 </footer>

@@ -1,6 +1,7 @@
 'use strict';
 
 const { filterPosts, findTranslation, normalizeLang, sortPosts, toArray } = require('../lib/content');
+const { buildSummary } = require('../lib/summary');
 
 /**
  * 模板里统一把文章集合转成数组。
@@ -15,18 +16,7 @@ hexo.extend.helper.register('as_list', function asListHelper(collection) {
  * 去掉 HTML 标签后截断，避免列表里出现大段代码或未闭合标签。
  */
 hexo.extend.helper.register('post_summary', function postSummaryHelper(post) {
-  const source = post.excerpt || post.content || '';
-  const plain = String(source)
-    .replace(/<pre[\s\S]*?<\/pre>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  if (!plain) {
-    return '';
-  }
-
-  return plain.length <= 140 ? plain : `${plain.slice(0, 140).trim()}...`;
+  return buildSummary(post);
 });
 
 /** 去掉首尾斜杠与 index.html，用来比较「路由路径」和「permalink」两种写法。 */

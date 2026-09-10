@@ -63,3 +63,9 @@ git switch feat/channels    # 直接切到阶段 3 的分支
 git branch -d feat/theme-skeleton
 git push origin --delete feat/theme-skeleton
 ```
+
+## 五、里程碑 2 索引
+
+| 编号 | 主题 | 提交标题 | 学习要点 |
+| --- | --- | --- | --- |
+| M2-1 | 双语 Atom 订阅源 | 新增: 实现双语 Atom 订阅源 | 订阅源不必依赖插件：复用语言过滤与排序，自己拼 Atom XML 即可；摘要与站点资料读取都抽到 `lib/`，让模板与生成器共用同一套规则 |

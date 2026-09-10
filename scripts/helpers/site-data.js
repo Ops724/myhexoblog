@@ -1,29 +1,12 @@
 'use strict';
 
-const { normalizeLang } = require('../lib/content');
+const { readProfileText } = require('../lib/site-data');
 
 /** 读取站点的 source/_data/profile.yml，没有配置时返回空对象。 */
 function profileData(locals) {
   const data = locals && locals.site && locals.site.data ? locals.site.data : {};
 
   return data.profile || {};
-}
-
-/**
- * 取站点资料里的文本字段，兼容两种写法：
- * - 双语对象：site_name: { zh-CN: ..., en: ... }
- * - 纯字符串：tagline: 一句话
- */
-function readProfileText(profile, key, lang) {
-  const value = profile[key];
-
-  if (value && typeof value === 'object' && !Array.isArray(value)) {
-    const target = normalizeLang(lang);
-
-    return value[target] || value['zh-CN'] || value['en'] || '';
-  }
-
-  return value == null ? '' : String(value);
 }
 
 hexo.extend.helper.register('profile_text', function profileTextHelper(key, lang) {

@@ -14,6 +14,7 @@ ui.no_albums: No albums yet.
 ui.no_photos: This album has no photos yet.
 ui.photo_unit: photos
 ui.close: Close
+ui.subscribe: RSS
 ui.categories_intro: Browse posts by topic.
 ui.tags_intro: Tags support discovery, not primary navigation.
 ui.archives_title: Archives
