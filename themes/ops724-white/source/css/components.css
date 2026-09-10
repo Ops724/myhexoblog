@@ -39,6 +39,23 @@
   color: var(--muted);
 }
 
+.language-switcher {
+  display: flex;
+  gap: var(--space-1);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.language-switcher a {
+  padding: 0 0.15rem;
+  color: var(--muted);
+}
+
+.language-switcher a.is-active {
+  color: var(--text);
+  border-bottom-color: var(--line-strong);
+}
+
 .article-header {
   display: flex;
   flex-direction: column;

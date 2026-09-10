@@ -372,10 +372,11 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
   - [ ] 站点 `_config.yml` 设置 `language: [zh-CN, en]`、`permalink`、`i18n_dir`。
   - [ ] 实现语言归一化过滤器（允许 `zh`/`cn` 等简写，缺失时补默认值）。
   - [ ] 实现路由 helper：给定页面与目标语言，算出对应 URL。
+  - [ ] 实现最小的语言首页生成器：`/` 只出中文文章，`/en/` 只出英文文章（阶段 3 再扩展成频道与分页）。
   - [ ] 在 `examples/` 中提供示例内容（中英各一篇技术文章、一篇生活文章、一篇关于页），由 `npm run content:init` 复制到本地私有路径。
   - [ ] 更新 `scaffolds/post.md`、`scaffolds/page.md`，固化内容模型字段。
   - [ ] 页头语言切换基础版（纯链接）。
-- 涉及文件：`_config.yml`、`scripts/filters/*`、`scripts/helpers/*`、`source/_posts/**`、`source/*/about/**`、`scaffolds/*`、主题 `partials/language-switcher.ejs`。
+- 涉及文件：`_config.yml`、`scripts/lib/*`、`scripts/filters/*`、`scripts/helpers/*`、`scripts/generators/localized-index.js`、`source/_posts/**`、`source/*/about/**`、`scaffolds/*`、主题 `layout/page.ejs` 与 `partials/language-switcher.ejs`。
 - 验收：`/`、`/en/`、`/about/`、`/en/about/` 均可访问；同一篇内容切换语言的链接指向正确；界面文案随语言变化。
 - 建议分支：`feat/i18n-foundation`
 - 建议提交：`新增: 搭建双语内容模型与语言路由基础`

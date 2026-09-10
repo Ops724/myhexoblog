@@ -66,6 +66,11 @@
   font-size: 0.95rem;
 }
 
+.site-header-locale {
+  display: flex;
+  align-items: center;
+}
+
 .site-main {
   flex: 1;
   width: 100%;
