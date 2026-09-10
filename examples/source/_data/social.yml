@@ -1,0 +1,7 @@
+# 社交链接模板：脚本会复制为 source/_data/social.yml（该文件不进入 Git）
+# 不需要的条目直接删掉即可，页脚不会渲染空列表
+links:
+  - label: GitHub
+    url: https://github.com/Ops724
+  - label: Email
+    url: mailto:you@example.com

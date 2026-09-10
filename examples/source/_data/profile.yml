@@ -6,10 +6,7 @@ site_name:
 tagline:
   zh-CN: 记录生活，也记录代码与思考。
   en: Notes on life, code, and the craft of building.
-avatar: ''
+avatar: /images/avatar.svg
+favicon: /images/favicon.svg
 header_background_color: ''
 body_background_color: ''
-email: ''
-location:
-  zh-CN: ''
-  en: ''

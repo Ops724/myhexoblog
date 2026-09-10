@@ -1,25 +1,35 @@
+<% const currentLang = page_lang(page) %>
+<% const siteName = site_title(page) %>
+<% const tagline = profile_text('tagline', currentLang) %>
+<% const avatar = profile_value('avatar') %>
+<% const headerBackground = profile_value('header_background_color') %>
+<% const navigation = site.data.navigation || {} %>
+<% const navItems = navigation.items || [] %>
 <header class="site-header">
-  <div class="site-header-inner">
+  <div
+    class="site-header-inner<%= headerBackground ? ' is-filled' : '' %>"
+    <% if (headerBackground) { %>style="background-color: <%= headerBackground %>;"<% } %>
+  >
     <div class="site-header-profile">
-      <a class="site-avatar-link" href="<%- url_for('/') %>" aria-label="<%= config.title %>">
-        <span class="site-avatar" aria-hidden="true"></span>
+      <a class="site-avatar-link" href="<%- url_for(currentLang === 'en' ? '/en/' : '/') %>" aria-label="<%= siteName %>">
+        <% if (avatar) { %>
+          <img class="site-avatar" src="<%- url_for(avatar) %>" alt="<%= siteName %>" width="48" height="48">
+        <% } else { %>
+          <span class="site-avatar site-avatar-placeholder" aria-hidden="true"></span>
+        <% } %>
       </a>
       <div class="site-identity">
-        <a class="site-brand" href="<%- url_for('/') %>"><%= config.title %></a>
-        <% if (config.subtitle) { %>
-          <p class="site-tagline"><%= config.subtitle %></p>
+        <a class="site-brand" href="<%- url_for(currentLang === 'en' ? '/en/' : '/') %>"><%= siteName %></a>
+        <% if (tagline) { %>
+          <p class="site-tagline"><%= tagline %></p>
         <% } %>
       </div>
     </div>
-    <% const currentLang = page_lang(page) %>
-    <% const langPrefix = currentLang === 'en' ? '/en' : '' %>
     <nav class="site-nav" aria-label="Main">
-      <a href="<%- url_for(`${langPrefix}/`) %>"><%= __('nav.home') %></a>
-      <a href="<%- url_for(`${langPrefix}/life/`) %>"><%= __('nav.life') %></a>
-      <a href="<%- url_for(`${langPrefix}/categories/`) %>"><%= __('nav.categories') %></a>
-      <a href="<%- url_for(`${langPrefix}/tags/`) %>"><%= __('nav.tags') %></a>
-      <a href="<%- url_for(`${langPrefix}/archives/`) %>"><%= __('nav.archives') %></a>
-      <a href="<%- url_for(`${langPrefix}/about/`) %>"><%= __('nav.about') %></a>
+      <% navItems.forEach(function (item) { %>
+        <% const target = item.paths ? (item.paths[currentLang] || item.paths['zh-CN']) : item.path %>
+        <a href="<%- url_for(target) %>"><%= __(item.label_key) %></a>
+      <% }) %>
     </nav>
     <div class="site-header-locale">
       <%- partial('partials/language-switcher') %>

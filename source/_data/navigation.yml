@@ -1,0 +1,26 @@
+# 主导航：label_key 指向主题里的界面文案，paths 按语言给出地址
+items:
+  - label_key: nav.home
+    paths:
+      zh-CN: /
+      en: /en/
+  - label_key: nav.life
+    paths:
+      zh-CN: /life/
+      en: /en/life/
+  - label_key: nav.categories
+    paths:
+      zh-CN: /categories/
+      en: /en/categories/
+  - label_key: nav.tags
+    paths:
+      zh-CN: /tags/
+      en: /en/tags/
+  - label_key: nav.archives
+    paths:
+      zh-CN: /archives/
+      en: /en/archives/
+  - label_key: nav.about
+    paths:
+      zh-CN: /about/
+      en: /en/about/
