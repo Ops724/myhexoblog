@@ -1,0 +1,9 @@
+<div class="post-meta">
+  <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, config.date_format) %></time>
+  <% if (page.categories && page.categories.length) { %>
+    <span><%= page.categories.map(function (category) { return category.name; }).join(' / ') %></span>
+  <% } %>
+  <% if (page.tags && page.tags.length) { %>
+    <span><%= page.tags.map(function (tag) { return '#' + tag.name; }).join(' ') %></span>
+  <% } %>
+</div>

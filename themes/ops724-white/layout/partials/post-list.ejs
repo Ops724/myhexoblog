@@ -1,0 +1,22 @@
+<% const items = as_list(posts) %>
+<% if (items.length) { %>
+  <div class="post-list">
+    <% items.forEach(function (post) { %>
+      <article class="post-list-item">
+        <div class="post-list-topline">
+          <p class="post-date"><%= date(post.date, config.date_format) %></p>
+          <% if (post.categories && post.categories.length) { %>
+            <p class="post-category"><%= post.categories.map(function (category) { return category.name; }).join(' / ') %></p>
+          <% } %>
+        </div>
+        <h3><a href="<%- url_for(post.path) %>"><%= post.title %></a></h3>
+        <div class="post-excerpt"><%= post_summary(post) %></div>
+        <p class="post-list-readmore">
+          <a href="<%- url_for(post.path) %>"><%= __('ui.read_more') %></a>
+        </p>
+      </article>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state"><%= __('ui.no_posts') %></p>
+<% } %>

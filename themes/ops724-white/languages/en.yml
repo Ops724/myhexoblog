@@ -4,7 +4,12 @@ nav.about: About
 nav.archives: Archives
 nav.categories: Categories
 nav.tags: Tags
-ui.latest_posts: Latest Posts
+ui.channel_tech: Tech Notes
+ui.channel_life: Life
+ui.channel_life_intro: Everyday notes, slower observations, and writing that does not need to solve a problem.
+ui.read_more: Read more
 ui.no_posts: No posts yet.
+ui.prev_page: Prev Page
+ui.next_page: Next Page
 ui.language_zh: 中
 ui.language_en: EN

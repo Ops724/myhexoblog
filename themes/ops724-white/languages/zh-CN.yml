@@ -4,7 +4,12 @@ nav.about: 关于
 nav.archives: 归档
 nav.categories: 分类
 nav.tags: 标签
-ui.latest_posts: 最新文章
+ui.channel_tech: 技术笔记
+ui.channel_life: 生活
+ui.channel_life_intro: 生活记录、日常观察，和一些不急着给出答案的片段。
+ui.read_more: 阅读全文
 ui.no_posts: 暂无文章
+ui.prev_page: 上一页
+ui.next_page: 下一页
 ui.language_zh: 中
 ui.language_en: EN
