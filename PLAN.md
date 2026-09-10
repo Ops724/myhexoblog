@@ -618,6 +618,7 @@ Hexo 只原生提供「界面文案 i18n」与「URL 前缀识别语言」，内
   - `source/robots.txt` 作为公开结构文件提交，指向 sitemap 的绝对地址。
   - `head.ejs` 输出 `<link rel="canonical">`，使用页面自身的绝对地址。
   - 分享卡片在 `head.ejs` 输出 Open Graph 与 Twitter Card；分享图默认使用 `profile.yml` 里的头像（PNG，社交平台对 SVG 支持不稳定），文章可在 front-matter 提供 `image:` 覆盖。
+  - 页面描述改为分级取值：front-matter 的 `description` 优先，文章用正文前 140 字摘要，列表页用频道说明，最后回退到站点描述。
 - 任务：sitemap 生成器、robots.txt、head 元信息、文档
 - 验收：`/sitemap.xml` 与 `/robots.txt` 可访问且格式合法；sitemap 含中英交替链接、不含草稿；抽查文章源码能看到 canonical 与 og 标签。
 - 分支：`feat/seo`｜提交：`新增: 补齐站点地图与分享元信息`

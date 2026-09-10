@@ -1,11 +1,41 @@
 <% const siteName = site_title(page) %>
 <% const favicon = profile_value('favicon') %>
 <% const currentLang = page_lang(page) %>
+<% const otherLang = currentLang === 'en' ? 'zh-CN' : 'en' %>
 <% const feedPath = currentLang === 'en' ? '/en/atom.xml' : '/atom.xml' %>
+<% const pageTitle = page.title && page.title !== siteName ? `${page.title} · ${siteName}` : siteName %>
+<% const description = page_description(page) %>
+<% const canonical = absolute_url(page.path) %>
+<% const shareImage = page_image(page) %>
+<% const isArticle = Boolean(page.__post || page.layout === 'album') %>
+<% const translation = isArticle ? other_translation(page) : null %>
+<% const alternatePath = translation ? translation.path : localized_page_url(page, otherLang) %>
+<% const hasAlternate = isArticle ? Boolean(translation) : route_exists(alternatePath) %>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><% if (page.title && page.title !== siteName) { %><%= page.title %> · <% } %><%= siteName %></title>
-<meta name="description" content="<%= config.description %>">
+<title><%= pageTitle %></title>
+<meta name="description" content="<%= description %>">
+<link rel="canonical" href="<%- canonical %>">
+<% if (hasAlternate) { %>
+<link rel="alternate" hreflang="<%= currentLang %>" href="<%- canonical %>">
+<link rel="alternate" hreflang="<%= otherLang %>" href="<%- absolute_url(alternatePath) %>">
+<link rel="alternate" hreflang="x-default" href="<%- currentLang === 'zh-CN' ? canonical : absolute_url(alternatePath) %>">
+<% } %>
+<meta property="og:type" content="<%= isArticle ? 'article' : 'website' %>">
+<meta property="og:site_name" content="<%= siteName %>">
+<meta property="og:title" content="<%= page.title || siteName %>">
+<meta property="og:description" content="<%= description %>">
+<meta property="og:url" content="<%- canonical %>">
+<meta property="og:locale" content="<%= currentLang === 'en' ? 'en_US' : 'zh_CN' %>">
+<% if (shareImage) { %>
+<meta property="og:image" content="<%- shareImage %>">
+<% } %>
+<meta name="twitter:card" content="<%= shareImage ? 'summary_large_image' : 'summary' %>">
+<meta name="twitter:title" content="<%= page.title || siteName %>">
+<meta name="twitter:description" content="<%= description %>">
+<% if (shareImage) { %>
+<meta name="twitter:image" content="<%- shareImage %>">
+<% } %>
 <% if (favicon) { %>
 <link rel="icon" href="<%- url_for(favicon) %>">
 <% } %>

@@ -89,6 +89,16 @@ captions:
 
 订阅源里的链接是绝对地址，取自 `_config.yml` 的 `url`，部署前需要把它改成真实域名。
 
+## 搜索引擎与分享
+
+- `/sitemap.xml`：站点地图，列出所有希望被收录的页面；中英对照的页面互相标注 hreflang，分页地址不收录
+- `/robots.txt`：允许抓取，并指向上面的站点地图
+- 每个页面都输出 `canonical`（规范地址）以及 Open Graph / Twitter 分享卡片信息
+
+上线后可以把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 或百度站长平台，收录会更快。把链接分享到微信、Slack 等平台时，卡片会显示页面标题、描述与分享图。
+
+页面描述按优先级取值：front-matter 的 `description` → 文章正文前 140 字摘要 → 频道的说明文案 → 正文摘要 → 站点描述。分享图默认使用 `profile.yml` 里的头像，文章可以用 front-matter 的 `image` 覆盖。
+
 ## 目录结构
 
 ```

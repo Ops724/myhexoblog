@@ -1,6 +1,7 @@
 'use strict';
 
 const { filterPosts, normalizeSection, sortPosts } = require('../lib/content');
+const { CHANNELS } = require('../lib/channels');
 const { createPaginatedRoutes } = require('../lib/paginate');
 
 /**
@@ -14,43 +15,6 @@ const { createPaginatedRoutes } = require('../lib/paginate');
  *
  * 分页规则与实现见 scripts/lib/paginate.js，与分类、标签详情页共用。
  */
-
-const CHANNELS = [
-  { lang: 'zh-CN', section: 'tech', base: '', layout: ['index', 'list'], titleKey: 'ui.channel_tech' },
-  { lang: 'en', section: 'tech', base: 'en/', layout: ['index', 'list'], titleKey: 'ui.channel_tech' },
-  {
-    lang: 'zh-CN',
-    section: 'life',
-    base: 'life/',
-    layout: ['section', 'list'],
-    titleKey: 'ui.channel_life',
-    introKey: 'ui.channel_life_intro'
-  },
-  {
-    lang: 'en',
-    section: 'life',
-    base: 'en/life/',
-    layout: ['section', 'list'],
-    titleKey: 'ui.channel_life',
-    introKey: 'ui.channel_life_intro'
-  },
-  {
-    lang: 'zh-CN',
-    section: 'photos',
-    base: 'photos/',
-    layout: ['photos', 'list'],
-    titleKey: 'ui.channel_photos',
-    introKey: 'ui.channel_photos_intro'
-  },
-  {
-    lang: 'en',
-    section: 'photos',
-    base: 'en/photos/',
-    layout: ['photos', 'list'],
-    titleKey: 'ui.channel_photos',
-    introKey: 'ui.channel_photos_intro'
-  }
-];
 
 hexo.extend.generator.register('index', function channelPagination(locals) {
   const perPage = this.config.index_generator.per_page || this.config.per_page || 10;

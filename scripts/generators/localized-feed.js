@@ -1,8 +1,10 @@
 'use strict';
 
 const { filterPosts, normalizeLang, sortPosts, toArray } = require('../lib/content');
+const { absoluteUrl } = require('../lib/paths');
 const { readProfileText } = require('../lib/site-data');
 const { buildSummary } = require('../lib/summary');
+const { escapeXml } = require('../lib/xml');
 
 /**
  * 双语 Atom 订阅源生成器。
@@ -25,23 +27,6 @@ const FEEDS = [
   { lang: 'zh-CN', path: 'atom.xml', homePath: '/' },
   { lang: 'en', path: 'en/atom.xml', homePath: '/en/' }
 ];
-
-function escapeXml(value) {
-  return String(value == null ? '' : value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-/** 把站内路径拼成绝对地址；站点部署在域名根目录下。 */
-function absoluteUrl(config, path) {
-  const base = String(config.url || '').replace(/\/+$/, '');
-  const normalized = String(path || '').replace(/^\/+/, '');
-
-  return normalized ? `${base}/${normalized}` : `${base}/`;
-}
 
 function readProfile(locals) {
   const data = (locals && locals.data) || hexo.locals.get('data') || {};
