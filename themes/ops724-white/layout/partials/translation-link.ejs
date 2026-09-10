@@ -1,0 +1,9 @@
+<% const translation = other_translation(page) %>
+<% if (translation) { %>
+  <p class="post-translation">
+    <a href="<%- url_for(translation.path) %>">
+      <span class="post-translation-label"><%= page_lang(translation) === 'en' ? __('ui.language_en_full') : __('ui.language_zh_full') %></span>
+      <span><%= translation.title %></span>
+    </a>
+  </p>
+<% } %>

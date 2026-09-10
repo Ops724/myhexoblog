@@ -1,0 +1,238 @@
+/*
+ * 文章内容样式：作用于文章头部与正文。
+ * 目标是长时间阅读舒适：排版克制、代码可读、图片撑满正文宽度。
+ */
+
+.article {
+  margin-top: var(--space-4);
+}
+
+.article-header {
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.article-header h1 {
+  margin-bottom: 0.9rem;
+  font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.1rem;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.post-translation {
+  margin: 1rem 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+.post-translation a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.post-translation a:hover,
+.post-translation a:focus-visible {
+  color: var(--text);
+  border-bottom-color: var(--line-strong);
+}
+
+.post-translation-label {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.article-body {
+  color: #2a2a2a;
+  font-size: 1rem;
+}
+
+.article-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  margin-top: var(--space-4);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.article-body h2 {
+  font-size: 1.9rem;
+}
+
+.article-body h3 {
+  font-size: 1.45rem;
+}
+
+.article-body p,
+.article-body ul,
+.article-body ol {
+  margin-bottom: 1.35rem;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.2rem;
+}
+
+.article-body li {
+  margin-bottom: 0.4rem;
+}
+
+.article-body a {
+  border-bottom: 1px solid var(--line);
+}
+
+.article-body a:hover,
+.article-body a:focus-visible {
+  border-bottom-color: var(--text);
+}
+
+/* 图片默认居中并撑满正文宽度 */
+.article-body img {
+  width: 100%;
+  max-width: 100%;
+  margin: var(--space-3) auto;
+  border: 1px solid var(--line);
+  background: #ffffff;
+}
+
+.article-body figcaption,
+.article-body .image-caption {
+  margin-top: -0.7rem;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.92rem;
+}
+
+.article-body blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem var(--space-3);
+  border-left: 2px solid var(--line-strong);
+  color: var(--muted);
+}
+
+.article-body hr {
+  margin: var(--space-5) 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.article-body table {
+  width: 100%;
+  margin-bottom: 1.35rem;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.article-body th,
+.article-body td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+/* 代码：行内代码浅灰描边，代码块浅灰底并允许横向滚动 */
+.article-body code {
+  font-family: var(--font-mono);
+}
+
+.article-body :not(pre) > code {
+  padding: 0.14rem 0.35rem;
+  background: #f7f7f7;
+  border: 1px solid var(--line);
+  font-size: 0.92em;
+}
+
+.article-body pre {
+  margin: 1.8rem 0;
+  padding: 1.15rem 1.2rem;
+  overflow-x: auto;
+  background: #fafafa;
+  border: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.article-body pre code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: #2b2b2b;
+  font-size: inherit;
+}
+
+/* Prism 语法高亮配色：低饱和，和整站的克制气质一致 */
+.article-body .token.comment,
+.article-body .token.prolog,
+.article-body .token.doctype,
+.article-body .token.cdata {
+  color: #8a8a8a;
+}
+
+.article-body .token.punctuation {
+  color: #666666;
+}
+
+.article-body .token.property,
+.article-body .token.tag,
+.article-body .token.constant,
+.article-body .token.symbol,
+.article-body .token.deleted {
+  color: #9b2c2c;
+}
+
+.article-body .token.boolean,
+.article-body .token.number {
+  color: #8b5e00;
+}
+
+.article-body .token.selector,
+.article-body .token.attr-name,
+.article-body .token.string,
+.article-body .token.char,
+.article-body .token.builtin,
+.article-body .token.inserted {
+  color: #166534;
+}
+
+.article-body .token.operator,
+.article-body .token.entity,
+.article-body .token.url {
+  color: #374151;
+}
+
+.article-body .token.atrule,
+.article-body .token.attr-value,
+.article-body .token.keyword {
+  color: #1d4ed8;
+}
+
+.article-body .token.function,
+.article-body .token.class-name {
+  color: #7c3aed;
+}
+
+.article-body .token.regex,
+.article-body .token.important,
+.article-body .token.variable {
+  color: #92400e;
+}

@@ -2,8 +2,10 @@
   <header class="article-header">
     <h1><%= page.title %></h1>
     <%- partial('partials/post-meta') %>
+    <%- partial('partials/translation-link') %>
   </header>
   <div class="article-body">
     <%- page.content %>
   </div>
+  <%- partial('partials/pagination', { neighbors: post_neighbors(page) }) %>
 </article>

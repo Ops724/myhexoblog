@@ -1,0 +1,18 @@
+<% const previous = neighbors && neighbors.prev ? neighbors.prev : null %>
+<% const next = neighbors && neighbors.next ? neighbors.next : null %>
+<% if (previous || next) { %>
+  <nav class="pagination" aria-label="Article navigation">
+    <% if (previous) { %>
+      <a class="pagination-item" href="<%- url_for(previous.path) %>">
+        <span class="pagination-label"><%= __('ui.previous') %></span>
+        <strong><%= previous.title %></strong>
+      </a>
+    <% } %>
+    <% if (next) { %>
+      <a class="pagination-item pagination-item-next" href="<%- url_for(next.path) %>">
+        <span class="pagination-label"><%= __('ui.next') %></span>
+        <strong><%= next.title %></strong>
+      </a>
+    <% } %>
+  </nav>
+<% } %>

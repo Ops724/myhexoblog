@@ -11,5 +11,9 @@ ui.read_more: 阅读全文
 ui.no_posts: 暂无文章
 ui.prev_page: 上一页
 ui.next_page: 下一页
+ui.previous: 上一篇
+ui.next: 下一篇
 ui.language_zh: 中
 ui.language_en: EN
+ui.language_zh_full: 中文
+ui.language_en_full: English

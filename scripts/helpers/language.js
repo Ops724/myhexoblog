@@ -1,6 +1,6 @@
 'use strict';
 
-const { DEFAULT_LANG, normalizeLang, toArray } = require('../lib/content');
+const { DEFAULT_LANG, findTranslation, normalizeLang } = require('../lib/content');
 
 /** 去掉首尾斜杠，并把首页路径里的 index.html 归一成空字符串。 */
 function normalizePath(value) {
@@ -30,20 +30,6 @@ function localizePath(pathname, lang) {
   return localized ? `/${localized}/` : '/';
 }
 
-/** 在全部文章里查找同一 translation_key 的另一种语言版本。 */
-function findTranslation(page, targetLang) {
-  if (!page || !page.translation_key) {
-    return null;
-  }
-
-  const target = normalizeLang(targetLang);
-
-  return toArray(hexo.locals.get('posts')).find(post => {
-    return post.translation_key === page.translation_key
-      && normalizeLang(post.lang) === target;
-  }) || null;
-}
-
 hexo.extend.helper.register('page_lang', function pageLangHelper(page) {
   return resolvePageLang(page);
 });
@@ -58,7 +44,7 @@ hexo.extend.helper.register('page_lang', function pageLangHelper(page) {
  */
 hexo.extend.helper.register('localized_page_url', function localizedPageUrlHelper(page, targetLang) {
   const target = normalizeLang(targetLang);
-  const sibling = findTranslation(page, target);
+  const sibling = findTranslation(hexo.locals.get('posts'), page && page.translation_key, target);
 
   if (sibling) {
     return localizePath(sibling.path, target);
