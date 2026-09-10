@@ -30,8 +30,6 @@ npm run server         # 打开 http://localhost:4000
 | --- | --- |
 | `npm run server` | 本地预览 `http://localhost:4000` |
 | `npm run build` | 生成静态站点到 `public/` |
-| `npm run build:full` | 生成站点并建立搜索索引 |
-| `npm run search:index` | 只重建搜索索引（需要先有 `public/`） |
 | `npm run clean` | 清理生成缓存 |
 | `npm run content:init` | 初始化本地示例内容（只补缺失文件，不覆盖已有文件；删除示例后请勿重复执行） |
 | `npm run deploy` | 构建并发布到 ECS |
@@ -103,12 +101,13 @@ captions:
 
 ## 站内搜索
 
-搜索页在 `/search/` 与 `/en/search/`，使用 Pagefind 在构建产物上建立静态索引，不需要后端服务。
+搜索页在 `/search/` 与 `/en/search/`，索引由生成器在构建时产出（`/search-index.json` 与 `/en/search-index.json`），前端做子串匹配，不需要后端服务，也没有额外依赖或构建步骤。
 
-- 本地开发：`hexo server` 不会自动建索引；先执行 `npm run build:full`，再启动预览（Hexo 会把 `public/pagefind/` 作为静态文件一并提供）。索引对应的是上次构建的站点，改完文章想搜到最新内容就重新跑一次
-- 部署：`tools/deploy.sh` 已经在构建后自动建索引，直接用 `npm run deploy` 即可
-- 索引范围：只包含文章、相册与关于页这类正文内容；列表页、导航与搜索页本身不进索引
-- 语言隔离：中英共用一份索引，靠页面上的语言标记过滤，中文页不会搜出英文内容
+- 检索方式：大小写不敏感的子串匹配；标题命中优先，其余按命中次数排序，最多显示 10 条，命中片段高亮
+- 索引范围：文章、相册与关于页的正文纯文本；相册这类没有正文的用照片说明兜底
+- 语言隔离：中英各一份索引，中文页只搜中文内容
+- 中文不需要分词，所以中文关键词一定搜得到
+- 索引只在搜索页按需加载，其它页面没有额外开销
 
 ## 目录结构
 

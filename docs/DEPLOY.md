@@ -68,9 +68,8 @@ npm run deploy
 
 1. 检查是否还有标记为示例的内容（见下）；
 2. 清理并重新构建站点；
-3. 在构建产物上建立站内搜索索引（Pagefind）；
-4. 把 `public/` 同步到服务器的新版本目录；
-5. 切换 `current` 软链，并按 `KEEP_RELEASES` 清理旧版本。
+3. 把 `public/` 同步到服务器的新版本目录；
+4. 切换 `current` 软链，并按 `KEEP_RELEASES` 清理旧版本。
 
 ### 示例内容保护
 

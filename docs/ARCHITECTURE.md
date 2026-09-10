@@ -106,7 +106,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | --- | --- |
 | `lib/content.js` | 语言与频道归一化、按语言频道过滤、排序、查找译文 |
 | `lib/paginate.js` | 分页路由生成：第 1 页是根地址，第 N 页是 `page/N/` |
-| `lib/summary.js` | 从正文提取纯文本摘要，列表页与订阅源共用同一套截断规则 |
+| `lib/summary.js` | 从正文提取纯文本（含摘要截断），列表页、订阅源与搜索索引共用 |
 | `lib/site-data.js` | 读取站点资料的双语字段，模板 helper 与订阅源共用 |
 | `lib/paths.js` | 站内路径归一化、中英路径互转与绝对地址拼接 |
 | `lib/channels.js` | 频道定义（语言 × 频道），列表生成器与站点地图共用 |
@@ -128,6 +128,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `generators/localized-archives.js` | `archive` | `/archives/`、`/en/archives/` |
 | `generators/localized-feed.js` | `feed` | `/atom.xml`、`/en/atom.xml` 两个 Atom 订阅源 |
 | `generators/localized-sitemap.js` | `sitemap` | `/sitemap.xml` 与 `/robots.txt` |
+| `generators/localized-search-index.js` | `search-index` | `/search-index.json`、`/en/search-index.json` |
 
 ### helpers（模板里可调用）
 
@@ -174,7 +175,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `content.css` | 文章排版、代码高亮配色、图片与引用 |
 | `photos.css` | 相册：堆叠封面、照片平铺与灯箱 |
 
-浏览器端脚本有两处：`source/js/photos.js`（相册灯箱：Esc 关闭、方向键切换、焦点回收）与 `source/js/search.js`（站内搜索：调用 Pagefind API 并自行渲染结果）。
+浏览器端脚本有两处：`source/js/photos.js`（相册灯箱：Esc 关闭、方向键切换、焦点回收）与 `source/js/search.js`（站内搜索：取索引 JSON、子串匹配并渲染结果）。
 
 ## 九、数据文件
 
@@ -225,8 +226,8 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 
 ## 十三、站内搜索
 
-- **方案**：Pagefind 在构建产物 `public/` 上建立静态索引，输出到 `public/pagefind/`，前端按需加载，不需要后端服务。
-- **构建流程**：`npm run build:full` = 生成站点 + `pagefind --site public`；`tools/deploy.sh` 的构建步骤也会在生成之后建索引。本地 `hexo server` 不会自动建索引，需要先跑一次 `build:full`。
-- **索引范围**：Pagefind 只索引带 `data-pagefind-body` 的页面，本项目在 `post.ejs`、`album.ejs`、`page.ejs` 的 `<article>` 上加了该属性，所以列表页、分类标签页、归档页、搜索页与导航都不会进索引。
-- **语言隔离**：索引只有一份，`layout.ejs` 在 `<body>` 上输出 `data-pagefind-filter="language[lang]"`，搜索时 `search.js` 按当前语言传过滤条件（值为小写的 `zh-cn` / `en`，Pagefind 会把过滤值规范化成小写）。
-- **界面**：不使用 Pagefind 自带 UI，`layout/search.ejs` 提供输入框与结果容器，`search.js` 调用 `pagefind.search()` 后自行渲染，样式与整站一致。
+- **方案**：构建时由生成器产出静态索引 JSON，前端按需加载并做子串匹配。零后端、零依赖、无额外构建步骤。
+- **索引**：`/search-index.json`（中文）与 `/en/search-index.json`（英文），由 `generators/localized-search-index.js` 生成；每条包含标题、地址、频道、日期与正文纯文本（相册用照片说明兜底），单条正文最多 6000 字符。
+- **检索**：`source/js/search.js` 取当前语言的索引，做大小写不敏感的子串匹配；标题命中权重更高，其次按命中次数排序，最多 10 条；命中片段用 `<mark>` 高亮，并显示命中位置附近的上下文。
+- **为什么不用分词方案**：中文没有天然词边界，Pagefind 的中文索引在本项目实测不可用（中文查询无结果、无头环境卡死、索引词数明显异常）；子串匹配不依赖分词，中文检索稳定，而且检索逻辑可以在本地用 Node 直接验证。
+- **收录**：搜索页是工具页，不进站点地图，也不进搜索索引。
