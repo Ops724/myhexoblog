@@ -28,6 +28,7 @@ h3 {
   margin: 0;
   font-weight: 600;
   line-height: 1.35;
+  overflow-wrap: break-word;
 }
 
 p {
@@ -50,4 +51,21 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* 键盘操作时给出清晰的焦点反馈 */
+:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* 尊重系统的「减少动态效果」设置 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

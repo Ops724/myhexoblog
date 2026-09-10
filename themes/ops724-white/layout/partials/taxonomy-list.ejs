@@ -1,8 +1,12 @@
-<div class="taxonomy-list">
-  <% items.forEach(function (item) { %>
-    <a class="taxonomy-item" href="<%- url_for(item.url) %>">
-      <span><%= item.name %></span>
-      <span class="taxonomy-count"><%= item.count %></span>
-    </a>
-  <% }) %>
-</div>
+<% if (items.length) { %>
+  <div class="taxonomy-list">
+    <% items.forEach(function (item) { %>
+      <a class="taxonomy-item" href="<%- url_for(item.url) %>">
+        <span><%= item.name %></span>
+        <span class="taxonomy-count"><%= item.count %></span>
+      </a>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state"><%= __('ui.no_taxonomy') %></p>
+<% } %>

@@ -5,9 +5,10 @@
     <%- partial('partials/head') %>
   </head>
   <body<% if (bodyBackground) { %> style="--page-background-color: <%= bodyBackground %>;"<% } %>>
+    <a class="skip-link" href="#main"><%= __('ui.skip_to_content') %></a>
     <div class="site-shell">
       <%- partial('partials/header') %>
-      <main class="site-main">
+      <main class="site-main" id="main">
         <%- body %>
       </main>
       <%- partial('partials/footer') %>

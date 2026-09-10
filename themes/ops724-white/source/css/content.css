@@ -67,6 +67,7 @@
 .article-body {
   color: #2a2a2a;
   font-size: 1rem;
+  overflow-wrap: break-word;
 }
 
 .article-body > *:last-child {
@@ -79,6 +80,7 @@
   margin-top: var(--space-4);
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  scroll-margin-top: var(--space-3);
 }
 
 .article-body h2 {
@@ -244,4 +246,12 @@
 .article-body .token.important,
 .article-body .token.variable {
   color: #92400e;
+}
+
+@media (max-width: 720px) {
+  /* 窄屏上让宽表格可以横向滚动，而不是把整页撑开 */
+  .article-body table {
+    display: block;
+    overflow-x: auto;
+  }
 }
