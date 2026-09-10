@@ -1,0 +1,15 @@
+# 站点资料模板：脚本会复制为 source/_data/profile.yml（该文件不进入 Git）
+# 使用时把下面的内容改成你自己的信息
+site_name:
+  zh-CN: 我的博客
+  en: My Blog
+tagline:
+  zh-CN: 记录生活，也记录代码与思考。
+  en: Notes on life, code, and the craft of building.
+avatar: ''
+header_background_color: ''
+body_background_color: ''
+email: ''
+location:
+  zh-CN: ''
+  en: ''
