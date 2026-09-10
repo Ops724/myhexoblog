@@ -5,6 +5,7 @@ lang: zh-CN
 section: life
 permalink: /posts/daily-note/
 translation_key: daily-note
+sample: true
 categories:
   - 随记
 tags:

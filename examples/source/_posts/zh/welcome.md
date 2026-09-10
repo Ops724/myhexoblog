@@ -5,6 +5,7 @@ lang: zh-CN
 section: tech
 permalink: /posts/welcome/
 translation_key: welcome
+sample: true
 categories:
   - 工具
 tags:

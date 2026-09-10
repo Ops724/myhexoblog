@@ -5,6 +5,7 @@ lang: zh-CN
 section: tech
 permalink: /posts/markdown-showcase/
 translation_key: markdown-showcase
+sample: true
 categories:
   - 工具
 tags:

@@ -5,6 +5,7 @@ lang: zh-CN
 section: tech
 permalink: /posts/why-hexo/
 translation_key: why-hexo
+sample: true
 categories:
   - 工具
 tags:

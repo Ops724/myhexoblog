@@ -5,6 +5,7 @@ lang: en
 section: tech
 permalink: /en/posts/markdown-showcase/
 translation_key: markdown-showcase
+sample: true
 categories:
   - Tools
 tags:
