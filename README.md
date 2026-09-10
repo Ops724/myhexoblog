@@ -105,7 +105,7 @@ captions:
 
 搜索页在 `/search/` 与 `/en/search/`，使用 Pagefind 在构建产物上建立静态索引，不需要后端服务。
 
-- 本地开发：`hexo server` 不会自动建索引，先执行 `npm run build:full`，再启动预览
+- 本地开发：`hexo server` 不会自动建索引；先执行 `npm run build:full`，再启动预览（Hexo 会把 `public/pagefind/` 作为静态文件一并提供）。索引对应的是上次构建的站点，改完文章想搜到最新内容就重新跑一次
 - 部署：`tools/deploy.sh` 已经在构建后自动建索引，直接用 `npm run deploy` 即可
 - 索引范围：只包含文章、相册与关于页这类正文内容；列表页、导航与搜索页本身不进索引
 - 语言隔离：中英共用一份索引，靠页面上的语言标记过滤，中文页不会搜出英文内容
