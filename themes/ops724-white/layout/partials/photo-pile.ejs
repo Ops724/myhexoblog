@@ -1,0 +1,17 @@
+<% if (photos && photos.length) { %>
+  <div class="photo-pile" data-photo-grid data-close-label="<%= __('ui.close') %>">
+    <% photos.forEach(function (src, index) { %>
+      <% const caption = captions && captions[index] ? captions[index] : '' %>
+      <figure class="photo-figure">
+        <a class="photo-open" href="<%- url_for(src) %>" data-caption="<%= caption %>">
+          <img src="<%- url_for(src) %>" alt="<%= caption || page.title %>" loading="lazy">
+        </a>
+        <% if (caption) { %>
+          <figcaption><%= caption %></figcaption>
+        <% } %>
+      </figure>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state"><%= __('ui.no_photos') %></p>
+<% } %>

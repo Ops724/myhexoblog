@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Summer placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf5e8"/>
+      <stop offset="1" stop-color="#efdcb9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="900" cy="230" r="120" fill="#e8c98f" opacity="0.9"/>
+  <rect x="0" y="0" width="1200" height="150" fill="#ffffff" opacity="0.35"/>
+  <rect x="300" y="640" width="600" height="14" fill="#c9a76b" opacity="0.7"/>
+  <rect x="180" y="700" width="220" height="100" fill="#e6d5b3" opacity="0.8"/>
+  <rect x="800" y="700" width="220" height="100" fill="#e6d5b3" opacity="0.8"/>
+</svg>

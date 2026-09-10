@@ -8,6 +8,10 @@ items:
     paths:
       zh-CN: /life/
       en: /en/life/
+  - label_key: nav.photos
+    paths:
+      zh-CN: /photos/
+      en: /en/photos/
   - label_key: nav.categories
     paths:
       zh-CN: /categories/

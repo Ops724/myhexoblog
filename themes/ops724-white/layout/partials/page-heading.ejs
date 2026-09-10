@@ -1,0 +1,8 @@
+<header class="section-heading">
+  <h1><%= page.title_key ? __(page.title_key) : page.title %></h1>
+  <% if (page.intro_key) { %>
+    <p class="section-copy"><%= __(page.intro_key) %></p>
+  <% } else if (page.content) { %>
+    <div class="section-copy"><%- page.content %></div>
+  <% } %>
+</header>

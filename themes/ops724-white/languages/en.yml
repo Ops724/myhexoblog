@@ -1,5 +1,6 @@
 nav.home: Home
 nav.life: Life
+nav.photos: Photos
 nav.about: About
 nav.archives: Archives
 nav.categories: Categories
@@ -7,6 +8,12 @@ nav.tags: Tags
 ui.channel_tech: Tech Notes
 ui.channel_life: Life
 ui.channel_life_intro: Everyday notes, slower observations, and writing that does not need to solve a problem.
+ui.channel_photos: Photos
+ui.channel_photos_intro: Pictures keep the moments that are easier to hold than to describe.
+ui.no_albums: No albums yet.
+ui.no_photos: This album has no photos yet.
+ui.photo_unit: photos
+ui.close: Close
 ui.categories_intro: Browse posts by topic.
 ui.tags_intro: Tags support discovery, not primary navigation.
 ui.archives_title: Archives

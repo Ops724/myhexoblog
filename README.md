@@ -5,7 +5,7 @@
 ## 项目特点
 
 - 双语单站点：中文在 `/`，英文在 `/en/`
-- 技术、生活两个内容频道，另有分类、标签与归档
+- 技术、生活、相册三个内容频道，另有分类、标签与归档
 - 自研主题 `ops724-white`：纯白背景、居中排版、方形头像
 - 公开代码 + 本地私有内容：真实文章不进仓库
 - 本地构建 + `rsync` 发布，支持原子切换与一键回滚
@@ -31,7 +31,7 @@ npm run server         # 打开 http://localhost:4000
 | `npm run server` | 本地预览 `http://localhost:4000` |
 | `npm run build` | 生成静态站点到 `public/` |
 | `npm run clean` | 清理生成缓存 |
-| `npm run content:init` | 初始化本地示例内容（只复制，不覆盖已有文件） |
+| `npm run content:init` | 初始化本地示例内容（只补缺失文件，不覆盖已有文件；删除示例后请勿重复执行） |
 | `npm run deploy` | 构建并发布到 ECS |
 | `npm run deploy:list` | 查看服务器上的版本与当前指向 |
 | `npm run deploy:rollback` | 回滚到上一个版本 |
@@ -52,7 +52,29 @@ npx hexo new post "文章标题"   # 生成到 source/_posts/，再移动到 zh/
 | `translation_key` | 中英译文配对标识，两边写同一个值即可互相跳转 |
 | `categories` / `tags` | 分类与标签 |
 
-文章图片放在与文章同名的目录里（例如 `source/_posts/zh/markdown-showcase/sample.svg`），正文里直接写 `![说明](sample.svg)` 即可。
+文章图片放在与文章同名的目录里（例如 `source/_posts/zh/<文章目录>/cover.png`），正文里直接写 `![说明](cover.png)` 即可。
+
+## 写一个相册
+
+相册也是一篇文章，只是多了 `photos` 与 `captions` 两个字段：
+
+```yaml
+---
+title: 四季小景
+date: 2026-09-09 09:00:00
+lang: zh-CN
+section: photos
+layout: album
+permalink: /photos/sample-scenes/
+translation_key: sample-scenes
+photos:
+  - /photos/sample-scenes/spring.svg
+captions:
+  - 初春，树影落在墙边
+---
+```
+
+照片可以放进与文章同名的目录（构建时会复制到相册地址下），也可以上传到 `source/images/` 后用绝对路径引用。相册列表在 `/photos/` 与 `/en/photos/`，点开后照片平铺展示，点击可用灯箱查看，支持 Esc 关闭与左右方向键切换。
 
 ## 目录结构
 
