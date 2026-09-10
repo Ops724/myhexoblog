@@ -49,7 +49,7 @@ function sortPosts(posts) {
   });
 }
 
-/** 只保留指定语言的文章。 */
+/** 频道归一化：只认 tech 与 life，其余归到 tech。 */
 function normalizeSection(value) {
   return value === 'life' ? 'life' : 'tech';
 }
@@ -69,10 +69,24 @@ function filterPosts(collection, lang, section) {
   });
 }
 
+/** 在文章集合里查找同一 translation_key、指定语言的译文。 */
+function findTranslation(collection, translationKey, lang) {
+  if (!translationKey) {
+    return null;
+  }
+
+  const target = normalizeLang(lang);
+
+  return toArray(collection).find(post => (
+    post.translation_key === translationKey && normalizeLang(post.lang) === target
+  )) || null;
+}
+
 module.exports = {
   DEFAULT_LANG,
   SUPPORTED_LANGS,
   filterPosts,
+  findTranslation,
   normalizeLang,
   normalizeSection,
   sortPosts,

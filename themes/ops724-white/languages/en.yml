@@ -11,5 +11,9 @@ ui.read_more: Read more
 ui.no_posts: No posts yet.
 ui.prev_page: Prev Page
 ui.next_page: Next Page
+ui.previous: Previous
+ui.next: Next
 ui.language_zh: 中
 ui.language_en: EN
+ui.language_zh_full: Chinese
+ui.language_en_full: English

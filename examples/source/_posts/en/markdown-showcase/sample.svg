@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-label="Sample image">
+  <rect width="640" height="320" fill="#ffffff"/>
+  <rect x="1" y="1" width="638" height="318" fill="none" stroke="#ececec"/>
+  <text x="320" y="150" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#1a1a1a">Sample image</text>
+  <text x="320" y="190" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#6f6f6f">full content width</text>
+</svg>
