@@ -8,13 +8,19 @@
 
 const SUMMARY_LENGTH = 140;
 
-function buildSummary(post, maxLength = SUMMARY_LENGTH) {
+/** 取出正文纯文本（去标签、压空白），列表摘要与搜索索引共用。 */
+function toPlainText(post) {
   const source = (post && (post.excerpt || post.content)) || '';
-  const plain = String(source)
+
+  return String(source)
     .replace(/<pre[\s\S]*?<\/pre>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function buildSummary(post, maxLength = SUMMARY_LENGTH) {
+  const plain = toPlainText(post);
 
   if (!plain) {
     return '';
@@ -25,5 +31,6 @@ function buildSummary(post, maxLength = SUMMARY_LENGTH) {
 
 module.exports = {
   SUMMARY_LENGTH,
-  buildSummary
+  buildSummary,
+  toPlainText
 };

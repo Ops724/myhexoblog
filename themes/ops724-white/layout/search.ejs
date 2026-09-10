@@ -1,11 +1,11 @@
-<% const searchLang = page_lang(page) === 'en' ? 'en' : 'zh-cn' %>
 <% const labels = { loading: __('ui.search_loading'), empty: __('ui.search_empty'), error: __('ui.search_error') } %>
+<% const indexPath = page_lang(page) === 'en' ? '/en/search-index.json' : '/search-index.json' %>
 <section class="content-section">
   <header class="section-heading">
     <h1><%= page.title %></h1>
     <p class="section-copy"><%= __('ui.search_hint') %></p>
   </header>
-  <div class="search" data-search data-language="<%= searchLang %>" data-labels="<%= JSON.stringify(labels) %>">
+  <div class="search" data-search data-index="<%= indexPath %>" data-labels="<%= JSON.stringify(labels) %>">
     <label class="search-label" for="search-input"><%= __('ui.search_placeholder') %></label>
     <input
       class="search-input"

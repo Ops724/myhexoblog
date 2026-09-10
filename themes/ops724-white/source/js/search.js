@@ -1,14 +1,12 @@
 /**
- * 站内搜索：调用 Pagefind 的浏览器 API，自己渲染结果。
+ * 站内搜索：按当前语言取索引 JSON，做大小写不敏感的子串匹配。
  *
- * 为什么不用 Pagefind 自带的界面：主题是克制的白底排版，自带界面样式差异较大；
- * 这里只需要「输入、结果列表、空状态」三件事，自己渲染反而更少代码也更好控制。
+ * 为什么用子串匹配而不是分词搜索：中文没有天然词边界，依赖分词器的方案
+ * 一旦切分不准就完全搜不到；子串匹配不需要分词，中文一定命中。
+ * 代价是没有词干还原、同义词与模糊匹配。
  *
- * 语言隔离：索引只有一份，页面在 body 上标了 data-pagefind-filter="language[lang]"，
- * 搜索时按当前语言传过滤条件，中文页不会搜出英文内容（反之亦然）。
- *
- * 索引由构建流程生成（npm run search:index）：本地 hexo server 不会自动建索引，
- * 需要先跑一次 npm run build:full。
+ * 索引由生成器产出（/search-index.json 与 /en/search-index.json），
+ * 只在搜索页按需加载。
  */
 (function () {
   'use strict';
@@ -19,12 +17,12 @@
   const input = root.querySelector('.search-input');
   const status = root.querySelector('[data-search-status]');
   const list = root.querySelector('[data-search-results]');
-  const language = root.getAttribute('data-language') || 'zh-cn';
+  const indexPath = root.getAttribute('data-index');
   const labels = JSON.parse(root.getAttribute('data-labels') || '{}');
   const maxResults = 10;
-  let pagefind = null;
+  const excerptRadius = 70;
+  let indexPromise = null;
   let timer = null;
-  let requestId = 0;
 
   function setStatus(message) {
     if (!status) return;
@@ -39,31 +37,104 @@
     status.textContent = message;
   }
 
-  async function loadPagefind() {
-    if (!pagefind) {
-      pagefind = await import('/pagefind/pagefind.js');
+  function loadIndex() {
+    if (!indexPromise) {
+      indexPromise = fetch(indexPath)
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then(data => data.entries || [])
+        .catch(error => {
+          indexPromise = null;
+          throw error;
+        });
     }
 
-    return pagefind;
+    return indexPromise;
   }
 
-  function buildResult(result) {
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  /** 用 <mark> 包住命中片段；先转义再高亮，避免正文里的 HTML 破坏结构。 */
+  function highlight(text, term) {
+    const escaped = escapeHtml(text);
+    const pattern = escapeRegExp(escapeHtml(term));
+
+    return escaped.replace(new RegExp(pattern, 'gi'), match => `<mark>${match}</mark>`);
+  }
+
+  function countOccurrences(text, term) {
+    let count = 0;
+    let position = text.indexOf(term);
+
+    while (position !== -1 && count < 100) {
+      count += 1;
+      position = text.indexOf(term, position + term.length);
+    }
+
+    return count;
+  }
+
+  function matchEntry(entry, term) {
+    const title = String(entry.title || '').toLowerCase();
+    const text = String(entry.text || '').toLowerCase();
+    const position = text.indexOf(term);
+    const titleHit = title.includes(term);
+
+    if (position === -1 && !titleHit) return null;
+
+    const occurrences = countOccurrences(text, term);
+
+    return {
+      entry,
+      position,
+      score: (titleHit ? 30 : 0) + Math.min(occurrences, 20) * 2 + (position !== -1 ? 5 : 0)
+    };
+  }
+
+  function buildExcerpt(entry, term, position) {
+    const text = String(entry.text || '');
+
+    if (position === -1) {
+      return highlight(entry.title || '', term);
+    }
+
+    const start = Math.max(0, position - excerptRadius);
+    const end = Math.min(text.length, position + term.length + excerptRadius);
+    const prefix = start > 0 ? '…' : '';
+    const suffix = end < text.length ? '…' : '';
+
+    return `${prefix}${highlight(text.slice(start, end), term)}${suffix}`;
+  }
+
+  function buildResult(match, term) {
     const item = document.createElement('li');
     item.className = 'search-result';
 
     const link = document.createElement('a');
     link.className = 'search-result-link';
-    link.href = result.url;
+    link.href = match.entry.url;
 
     const title = document.createElement('h2');
     title.className = 'search-result-title';
-    title.textContent = (result.meta && result.meta.title) || result.url;
-    link.appendChild(title);
+    title.innerHTML = highlight(match.entry.title || match.entry.url, term);
 
     const excerpt = document.createElement('p');
     excerpt.className = 'search-result-excerpt';
-    excerpt.innerHTML = result.excerpt || '';
+    excerpt.innerHTML = buildExcerpt(match.entry, term, match.position);
 
+    link.appendChild(title);
     item.appendChild(link);
     item.appendChild(excerpt);
 
@@ -71,7 +142,6 @@
   }
 
   async function runSearch(term) {
-    const current = ++requestId;
     list.innerHTML = '';
 
     if (!term) {
@@ -81,26 +151,26 @@
 
     setStatus(labels.loading);
 
-    try {
-      const pf = await loadPagefind();
-      const search = await pf.search(term, { filters: { language } });
-      const results = await Promise.all(
-        search.results.slice(0, maxResults).map(result => result.data())
-      );
+    const normalized = term.toLowerCase();
 
-      if (current !== requestId) return;
+    try {
+      const entries = await loadIndex();
+      const matches = entries
+        .map(entry => matchEntry(entry, normalized))
+        .filter(Boolean)
+        .sort((left, right) => right.score - left.score)
+        .slice(0, maxResults);
 
       list.innerHTML = '';
 
-      if (!results.length) {
+      if (!matches.length) {
         setStatus(labels.empty);
         return;
       }
 
       setStatus('');
-      results.forEach(result => list.appendChild(buildResult(result)));
+      matches.forEach(match => list.appendChild(buildResult(match, term)));
     } catch (error) {
-      if (current !== requestId) return;
       setStatus(labels.error);
     }
   }
