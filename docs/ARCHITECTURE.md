@@ -119,6 +119,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | 文件 | 作用 |
 | --- | --- |
 | `filters/normalize-content.js` | 渲染前统一 `lang` 与 `section`（只对文章设置 `section`） |
+| `filters/lazy-images.js` | 给正文图片补 `loading="lazy"` 与 `decoding="async"`（第一张图保持立即加载） |
 
 ### generators（注册名会覆盖同名官方生成器）
 

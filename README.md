@@ -154,4 +154,5 @@ docs/                 架构、部署与提交索引
 - [AGENTS.md](./AGENTS.md)：协作与提交约定
 - [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)：项目结构与实现说明
 - [docs/DEPLOY.md](./docs/DEPLOY.md)：ECS 部署说明
+- [docs/PERFORMANCE.md](./docs/PERFORMANCE.md)：性能基线、已做的优化与手工待办
 - [docs/COMMITS.md](./docs/COMMITS.md)：提交学习索引
