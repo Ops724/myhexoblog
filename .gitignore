@@ -28,6 +28,7 @@ source/about/
 source/en/about/
 source/_data/profile.yml
 source/_data/social.yml
+source/_data/analytics.yml
 
 # ============================================================
 # 本地部署配置（服务器地址、账号等敏感信息）

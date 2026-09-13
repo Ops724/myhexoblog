@@ -130,10 +130,12 @@ bash tools/deploy.sh rollback 20260910-153000    # 回滚到指定版本
 6. 站内搜索：`/search/` 搜几个中文关键词与英文关键词
 7. 分享卡片：把一篇文章的链接粘到微信或 Slack，确认能抓出标题、描述与分享图
 8. 证书续期：`sudo certbot renew --dry-run` 不报错
-9. 提交收录：把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 与百度站长平台
+9. 访问统计：打开 Umami 后台，确认能看到来自线上的访问记录
+10. 提交收录：把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 与百度站长平台
 
 补充说明：
 
 - **私有内容必须在本地构建时存在**：文章、相册、关于页、`profile.yml` 都在本地，服务器上只有生成好的静态文件，所以换一台机器发布前要先准备好这些内容。
 - **示例内容保护**：`source/` 里如果还有带 `sample: true` 的文件，发布会被中止；确实要发布演示内容时用 `DEPLOY_ALLOW_SAMPLES=1 npm run deploy`。
 - **搜索索引不需要额外步骤**：索引由 Hexo 生成器在构建时产出，和 `public/` 一起上传。
+- **统计脚本只在构建时注入**：本地 `hexo server` 预览不会带统计代码，所以本地看不到上报是正常的。
