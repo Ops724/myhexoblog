@@ -72,6 +72,7 @@ myhexoblog/
 | 订阅源 | `/atom.xml` | `/en/atom.xml` |
 | 站点地图与爬虫规则 | `/sitemap.xml`、`/robots.txt` | 与中文共用一份，内含中英条目 |
 | 站内搜索 | `/search/` | `/en/search/` |
+| 404 页面 | `/404.html` | 与中文共用一份，页面内同时给出中英提示 |
 
 ## 五、内容模型
 
@@ -159,6 +160,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `layout/photos.ejs` | 相册列表页，照片堆叠封面 |
 | `layout/album.ejs` | 相册详情页，照片平铺加灯箱 |
 | `layout/search.ejs` | 搜索页：输入框、状态提示与结果列表 |
+| `layout/404.ejs` | 404 页面：中英双语提示与返回首页链接 |
 | `layout/page.ejs` | 普通页面（关于页等） |
 
 ### partials
