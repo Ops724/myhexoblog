@@ -1,0 +1,8 @@
+# 自建 Umami 统计模板：复制为 source/_data/analytics.yml（该文件不进入 Git）
+# 留空、或删掉整个文件，站点就不会注入统计脚本
+umami:
+  script_url: https://umami.example.com/script.js
+  website_id: 00000000-0000-0000-0000-000000000000
+  # 本地 hexo server 预览默认不注入脚本（避免把本机访问算进统计）；
+  # 想在本地验证脚本是否生效时，把下面这行的注释去掉
+  # track_preview: true

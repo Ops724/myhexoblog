@@ -8,6 +8,7 @@
 <% const canonical = absolute_url(page.path) %>
 <% const shareImage = page_image(page) %>
 <% const isArticle = Boolean(page.__post || page.layout === 'album') %>
+<% const umami = umami_config() %>
 <% const translation = isArticle ? other_translation(page) : null %>
 <% const alternatePath = translation ? translation.path : localized_page_url(page, otherLang) %>
 <% const hasAlternate = isArticle ? Boolean(translation) : route_exists(alternatePath) %>
@@ -46,3 +47,6 @@
 <link rel="stylesheet" href="<%- url_for('/css/components.css') %>">
 <link rel="stylesheet" href="<%- url_for('/css/content.css') %>">
 <link rel="stylesheet" href="<%- url_for('/css/photos.css') %>">
+<% if (umami) { %>
+<script defer src="<%= umami.scriptUrl %>" data-website-id="<%= umami.websiteId %>"></script>
+<% } %>

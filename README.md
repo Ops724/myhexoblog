@@ -109,6 +109,20 @@ captions:
 - 中文不需要分词，所以中文关键词一定搜得到
 - 索引只在搜索页按需加载，其它页面没有额外开销
 
+## 访问统计
+
+站点使用自建 Umami，配置放在私有的 `source/_data/analytics.yml`（不进仓库，模板见 `examples/source/_data/analytics.yml`）：
+
+```yml
+umami:
+  script_url: https://umami.你的域名/script.js
+  website_id: 你的站点ID
+```
+
+- 没配置就不注入脚本，页面完全不带统计代码
+- 本地 `hexo server` 预览默认不注入（避免把本机访问算进统计）；想在本地验证脚本是否生效时，打开配置里的 `track_preview`
+- 部署后到 Umami 后台确认能看到访问记录
+
 ## 目录结构
 
 ```

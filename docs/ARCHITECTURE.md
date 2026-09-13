@@ -141,6 +141,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `helpers/navigation.js` | `is_nav_active` |
 | `helpers/site-data.js` | `profile_text`、`profile_value`、`site_title` |
 | `helpers/seo.js` | `absolute_url`、`page_description`、`page_image`、`route_exists` |
+| `helpers/analytics.js` | `umami_config`：按配置与运行模式决定是否注入统计脚本 |
 
 ## 八、主题结构
 
@@ -184,6 +185,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | `source/_data/navigation.yml` | 公开 | 主导航项与双语地址 |
 | `source/_data/profile.yml` | 私有 | 站点名、副标题、头像、图标、背景色 |
 | `source/_data/social.yml` | 私有 | 页脚社交链接 |
+| `source/_data/analytics.yml` | 私有 | 自建 Umami 的脚本地址与站点 ID |
 
 ## 十、相册设计说明
 
