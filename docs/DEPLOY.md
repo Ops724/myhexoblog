@@ -68,6 +68,8 @@ ssh-copy-id deploy@your-ecs-ip
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
+示例配置里已经带了 `error_page 404 /404.html;`，Nginx 会用它返回站点自己的 404 页面。
+
 4. 申请 HTTPS 证书（可选但推荐）：
 
 ```bash
@@ -132,6 +134,7 @@ bash tools/deploy.sh rollback 20260910-153000    # 回滚到指定版本
 8. 证书续期：`sudo certbot renew --dry-run` 不报错
 9. 访问统计：打开 Umami 后台，确认能看到来自线上的访问记录
 10. 提交收录：把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 与百度站长平台
+11. 404 页面：随便访问一个不存在的地址（例如 `/no-such-page/`），确认看到的是站点的 404 页面而不是 Nginx 默认页
 
 补充说明：
 
