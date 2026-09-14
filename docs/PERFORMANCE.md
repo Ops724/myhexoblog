@@ -33,7 +33,7 @@
 
 | 项目 | 压缩前 | 压缩后 |
 | --- | --- | --- |
-| 构建产物总量 | 17 MB | 6.6 MB（-61%） |
+| 构建产物总量 | 17 MB | 6.6 MB（-61%，后续头像与图标完成后进一步降到 6.1 MB） |
 | VMware NAT 那篇 | 5.4 MB | 553 KB（-90%） |
 | Linux VLAN 那篇 | 4.9 MB | 498 KB |
 | 代理那篇 | 1.7 MB | 228 KB |
@@ -41,13 +41,15 @@
 
 验证方式：压缩前已备份原图；用 `file` 逐个确认新图格式为 WebP 且像素尺寸与原图一致；重新构建后检查全部图片与 CSS 引用的目标文件是否存在（78 个被引用资源，0 缺失）；确认正文懒加载仍对新图生效。
 
-仍然偏大的三处：
+图片体积收尾（2026-09-14 完成）：
 
-| 文件 / 目录 | 体积 | 说明 |
+| 文件 / 目录 | 变化 | 说明 |
 | --- | --- | --- |
-| ~~`source/images/avatar.png`~~ | ~~524.7 KB~~ → **9.9 KB** | 已缩到 96×96（M2-10） |
+| ~~`source/images/avatar.png`~~ | 524.7 KB → **9.9 KB** | 缩到 96×96（M2-10） |
 | `source/images/share.jpg` | 97.3 KB | 新增的分享卡片图（1200×630），只在社交平台抓取时使用，不进入页面加载 |
-| `source/images/favicon.ico` | 72.5 KB | 建议用 32×32 或 48×48 重新导出 |
+| ~~`source/images/favicon.ico`~~ | 72.5 KB → **7.9 KB** | 从 7 个尺寸精简为 16/32/48 三个 |
+
+现在唯一的大头是相册照片（WebP 约 4.3 MB，单张最大 179 KB），已经是较优格式，按需再压。
 | `source/images/albums/` | 约 4.3 MB | 相册照片，已经是 WebP（单张最大 179 KB），按需再压 |
 
 ## 三、已经做过的优化
@@ -62,17 +64,17 @@
 
 ## 四、手工待办：图片压缩（由使用者完成）
 
-现状：**文章截图已完成**（见第二节）。**头像已在 M2-10 处理**（缩到 96×96，并拆出专门分享图）。**只剩站点图标（favicon.ico）待处理**。
+现状：**都已经完成了**——文章截图（第二节）、头像与分享图（第二节，M2-10）、站点图标（本节末尾）。下面的步骤留作参考，以后需要重做图标时可以照做。
 
 优先处理三处：
 
 1. ~~文章截图~~：已完成（PNG → WebP）
 2. ~~头像~~：已完成（缩到 96×96，分享图另存为 `source/images/share.png`）
-3. **站点图标 `favicon.ico`**：见下一节
+3. ~~站点图标 `favicon.ico`~~：已完成（72.5 KB → 7.9 KB，见下）
 
-### 站点图标重做步骤（保持 .ico 格式）
+### 站点图标重做步骤（参考：2026-09-14 已按「做法四」完成）
 
-现状：`source/images/favicon.ico` 有 72.5 KB，里面塞了 7 个尺寸，其中 256×256 那一张就占 45 KB。**实际只需要 16/32/48 三个尺寸**，做完约 6 KB。
+旧文件：`source/images/favicon.ico` 有 72.5 KB，里面塞了 7 个尺寸，其中 256×256 那一张就占 45 KB。**实际只需要 16/32/48 三个尺寸**，做完 7.9 KB。
 
 本机没有 ImageMagick、Pillow 等工具，`sips` 又不能写 `.ico`，所以有三个做法，任选一个：
 
@@ -117,6 +119,21 @@ PY
 ```
 
 期望结果：3 个尺寸（16/32/48）、总体积 10 KB 以内。
+
+**做法四：不装任何工具（本次实际采用）**
+
+macOS 自带的 `sips` 负责取帧与缩放，再用一个几十行的 Node 脚本把 PNG 打包成 `.ico`：
+
+```bash
+sips -s format png source/images/favicon.ico --out /tmp/favicon-256.png   # 取出 256×256 帧
+sips -z 16 16 /tmp/favicon-256.png --out /tmp/icon-16.png
+sips -z 32 32 /tmp/favicon-256.png --out /tmp/icon-32.png
+sips -z 48 48 /tmp/favicon-256.png --out /tmp/icon-48.png
+# 再用打包脚本把三张 PNG 写进 .ico（ICO 容器 + PNG 负载）
+node tools/make-ico.mjs source/images/favicon.ico 16:/tmp/icon-16.png 32:/tmp/icon-32.png 48:/tmp/icon-48.png
+```
+
+打包脚本按 ICO 规范写入 6 字节文件头、每个尺寸 16 字节目录项与 PNG 负载，不依赖第三方库。
 
 压缩完成后验证（原图备份在 `~/Pictures/myhexoblog-originals/`）：
 
