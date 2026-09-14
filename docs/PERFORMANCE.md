@@ -45,7 +45,8 @@
 
 | 文件 / 目录 | 体积 | 说明 |
 | --- | --- | --- |
-| `source/images/avatar.png` | 524.7 KB | 现在是全站最大的单个文件，但显示尺寸只有 48×48；首页每次都会加载 |
+| ~~`source/images/avatar.png`~~ | ~~524.7 KB~~ → **9.9 KB** | 已缩到 96×96（M2-10） |
+| `source/images/share.jpg` | 97.3 KB | 新增的分享卡片图（1200×630），只在社交平台抓取时使用，不进入页面加载 |
 | `source/images/favicon.ico` | 72.5 KB | 建议用 32×32 或 48×48 重新导出 |
 | `source/images/albums/` | 约 4.3 MB | 相册照片，已经是 WebP（单张最大 179 KB），按需再压 |
 
@@ -61,18 +62,61 @@
 
 ## 四、手工待办：图片压缩（由使用者完成）
 
-现状：**文章截图已完成**（见第二节）。**头像与站点图标还没处理**，这两项体积小、操作简单，收益却很直接。
+现状：**文章截图已完成**（见第二节）。**头像已在 M2-10 处理**（缩到 96×96，并拆出专门分享图）。**只剩站点图标（favicon.ico）待处理**。
 
 优先处理三处：
 
 1. ~~文章截图~~：已完成（PNG → WebP）
-2. **头像**：`source/images/avatar.png` 有 524 KB，显示尺寸只有 48×48 —— 建议压到 10 KB 以内
-3. **站点图标**：`source/images/favicon.ico` 有 72 KB —— 建议用 32×32 或 48×48 重新导出
+2. ~~头像~~：已完成（缩到 96×96，分享图另存为 `source/images/share.png`）
+3. **站点图标 `favicon.ico`**：见下一节
 
-两种做法：
+### 站点图标重做步骤（保持 .ico 格式）
 
-- **同名压缩**（PNG 还是 PNG）：不用改文章里的引用，一般能减 50–70%
-- **转 WebP**：能减 70–85%，但需要同步改 markdown 里的图片引用（相册已经在用 WebP，这条路是可行的）
+现状：`source/images/favicon.ico` 有 72.5 KB，里面塞了 7 个尺寸，其中 256×256 那一张就占 45 KB。**实际只需要 16/32/48 三个尺寸**，做完约 6 KB。
+
+本机没有 ImageMagick、Pillow 等工具，`sips` 又不能写 `.ico`，所以有三个做法，任选一个：
+
+**做法一：在线生成器（最省事）**
+
+1. 打开 favicon.io 或 realfavicongenerator.net
+2. 上传 `source/images/avatar.png`（或先用下面的命令导出 256×256 的图标源图）
+3. 下载生成好的 `.ico`，覆盖 `source/images/favicon.ico`
+
+注意：这会把图标上传到第三方网站，介意的话用做法二或三。
+
+**做法二：本地安装 ImageMagick**
+
+```bash
+brew install imagemagick
+magick 'source/images/favicon.ico[6]' -resize 256x256 /tmp/favicon-256.png   # 取出最大的那一帧
+magick /tmp/favicon-256.png -define icon:auto-resize=48,32,16 source/images/favicon.ico
+```
+
+**做法三：只用系统自带命令**
+
+macOS 的 `sips` 读不出多尺寸 `ico`，但可以导出其中的 256×256 帧：
+
+```bash
+sips -s format png source/images/favicon.ico --out /tmp/favicon-256.png
+```
+
+再用任意能写 `.ico` 的工具（在线生成器、你自己顺手的软件）把这张 PNG 转成只含 16/32/48 的 `.ico`。
+
+**做完后验证**
+
+```bash
+python3 - <<'PY'
+import struct
+data = open('source/images/favicon.ico','rb').read()
+count = struct.unpack('<HHH', data[:6])[2]
+print(f'图标个数 {count}，体积 {len(data)/1024:.1f} KB')
+for i in range(count):
+    w, h, _, _, _, bpp, size, _ = struct.unpack('<BBBBHHII', data[6+i*16:22+i*16])
+    print(f'  {(w or 256)}x{(h or 256)}  {size/1024:.1f} KB')
+PY
+```
+
+期望结果：3 个尺寸（16/32/48）、总体积 10 KB 以内。
 
 压缩完成后验证（原图备份在 `~/Pictures/myhexoblog-originals/`）：
 

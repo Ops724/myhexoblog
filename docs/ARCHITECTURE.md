@@ -186,7 +186,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 | 文件 | 可见性 | 内容 |
 | --- | --- | --- |
 | `source/_data/navigation.yml` | 公开 | 主导航项与双语地址 |
-| `source/_data/profile.yml` | 私有 | 站点名、副标题、头像、图标、背景色 |
+| `source/_data/profile.yml` | 私有 | 站点名、副标题、头像、分享图（`og_image`）、图标、背景色 |
 | `source/_data/social.yml` | 私有 | 页脚社交链接 |
 | `source/_data/analytics.yml` | 私有 | 自建 Umami 的脚本地址与站点 ID |
 

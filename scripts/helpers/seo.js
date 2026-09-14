@@ -41,11 +41,17 @@ hexo.extend.helper.register('page_description', function pageDescriptionHelper(p
   return this.config.description || '';
 });
 
-/** 分享图：front-matter 的 image 优先，其次用站点资料里的头像。 */
+/**
+ * 分享图，按优先级取：
+ * 1. 文章 front-matter 里的 image
+ * 2. 站点资料里的 og_image（专门的分享图，通常是 1200×630）
+ * 3. 站点资料里的头像（头像只有 96×96，只作为兜底）
+ */
 hexo.extend.helper.register('page_image', function pageImageHelper(page) {
   const custom = page && page.image ? page.image : '';
+  const configured = this.profile_value ? this.profile_value('og_image') : '';
   const fallback = this.profile_value ? this.profile_value('avatar') : '';
-  const image = custom || fallback;
+  const image = custom || configured || fallback;
 
   return image ? absoluteUrl(this.config, image) : '';
 });
