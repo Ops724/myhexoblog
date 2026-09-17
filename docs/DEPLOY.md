@@ -135,6 +135,7 @@ bash tools/deploy.sh rollback 20260910-153000    # 回滚到指定版本
 9. 访问统计：打开 Umami 后台，确认能看到来自线上的访问记录
 10. 提交收录：把 `https://你的域名/sitemap.xml` 提交到 Google Search Console 与百度站长平台
 11. 404 页面：随便访问一个不存在的地址（例如 `/no-such-page/`），确认看到的是站点的 404 页面而不是 Nginx 默认页
+12. 备案号：确认页脚显示备案号（`profile.yml` 的 `icp`），点击能打开工信部备案查询系统
 
 补充说明：
 

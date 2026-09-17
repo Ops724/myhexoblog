@@ -10,5 +10,7 @@ avatar: /images/avatar.svg
 # 分享卡片图（社交平台抓取 og:image）：建议 1200×630 的 JPEG/PNG
 og_image: /images/share.jpg
 favicon: /images/favicon.svg
+# 页脚备案号（可选）：填了就显示在页脚，并链接到工信部备案系统
+# icp: 京ICP备00000000号
 header_background_color: ''
 body_background_color: ''
