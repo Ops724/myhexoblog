@@ -116,6 +116,12 @@
   text-align: center;
 }
 
+/* 备案号：字比版权行再小一点，保持页脚的安静感 */
+.site-footer-beian {
+  margin-top: var(--space-1);
+  font-size: 0.8rem;
+}
+
 .social-links {
   display: flex;
   flex-wrap: wrap;

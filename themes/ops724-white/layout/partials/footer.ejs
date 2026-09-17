@@ -2,6 +2,7 @@
 <% const socialLinks = social.links || [] %>
 <% const currentLang = page_lang(page) %>
 <% const feedPath = currentLang === 'en' ? '/en/atom.xml' : '/atom.xml' %>
+<% const icp = profile_value('icp') %>
 <footer class="site-footer">
   <ul class="social-links">
     <% socialLinks.forEach(function (link) { %>
@@ -10,4 +11,9 @@
     <li><a href="<%- url_for(feedPath) %>" rel="alternate" type="application/atom+xml"><%= __('ui.subscribe') %></a></li>
   </ul>
   <p>© <%= date(new Date(), 'YYYY') %> <%= site_title(page) %></p>
+  <% if (icp) { %>
+    <p class="site-footer-beian">
+      <a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank"><%= icp %></a>
+    </p>
+  <% } %>
 </footer>
