@@ -3,6 +3,10 @@
 <% const currentLang = page_lang(page) %>
 <% const feedPath = currentLang === 'en' ? '/en/atom.xml' : '/atom.xml' %>
 <% const icp = profile_value('icp') %>
+<% const policeIcp = profile_value('police_icp') %>
+<% const policeIcpIcon = profile_value('police_icp_icon') %>
+<%// 公安备案链接要的是号码里的数字后缀；除非显式配置了 police_icp_code，否则从号码里取数字 %>
+<% const policeIcpCode = profile_value('police_icp_code') || String(policeIcp).replace(/\D/g, '') %>
 <footer class="site-footer">
   <ul class="social-links">
     <% socialLinks.forEach(function (link) { %>
@@ -11,9 +15,16 @@
     <li><a href="<%- url_for(feedPath) %>" rel="alternate" type="application/atom+xml"><%= __('ui.subscribe') %></a></li>
   </ul>
   <p>© <%= date(new Date(), 'YYYY') %> <%= site_title(page) %></p>
-  <% if (icp) { %>
+  <% if (icp || policeIcp) { %>
     <p class="site-footer-beian">
-      <a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank"><%= icp %></a>
+      <% if (icp) { %>
+        <a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank"><%= icp %></a>
+      <% } %>
+      <% if (policeIcp) { %>
+        <a href="https://beian.mps.gov.cn/#/query/webSearch?code=<%= policeIcpCode %>" rel="noreferrer" target="_blank">
+          <% if (policeIcpIcon) { %><img class="site-footer-beian-icon" src="<%- url_for(policeIcpIcon) %>" alt="" width="18" height="20"><% } %><%= policeIcp %>
+        </a>
+      <% } %>
     </p>
   <% } %>
 </footer>
