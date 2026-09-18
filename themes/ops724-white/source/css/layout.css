@@ -116,10 +116,27 @@
   text-align: center;
 }
 
-/* 备案号：字比版权行再小一点，保持页脚的安静感 */
+/* 备案号：字比版权行再小一点，保持页脚的安静感；两条备案并排，窄屏自动换行 */
 .site-footer-beian {
   margin-top: var(--space-1);
   font-size: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem var(--space-2);
+}
+
+/* 图标与号码作为一个整体对齐：flex 比 vertical-align 更稳，不会随行高跑偏 */
+.site-footer-beian a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.site-footer-beian-icon {
+  width: auto;
+  height: 20px;
 }
 
 .social-links {
