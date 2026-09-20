@@ -13,7 +13,7 @@
     <div class="site-header-profile">
       <a class="site-avatar-link" href="<%- url_for(currentLang === 'en' ? '/en/' : '/') %>" aria-label="<%= siteName %>">
         <% if (avatar) { %>
-          <img class="site-avatar" src="<%- url_for(avatar) %>" alt="<%= siteName %>" width="64" height="64">
+          <img class="site-avatar" src="<%- url_for(avatar) %>" alt="<%= siteName %>" width="80" height="80">
         <% } else { %>
           <span class="site-avatar site-avatar-placeholder" aria-hidden="true"></span>
         <% } %>
