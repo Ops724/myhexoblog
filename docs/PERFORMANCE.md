@@ -58,6 +58,7 @@
 | --- | --- | --- |
 | `source/images/avatar.png` | 9.9 KB → **25.2 KB** | 换成新 logo；页头显示尺寸放大到 80×80，所以素材做成 160×160 |
 | `source/images/share.jpg` | 97.3 KB → **73 KB** | 同步换成新 logo，仍是 1200×630 |
+| `source/images/favicon.ico` | 7.9 KB → **7.1 KB** | 换成新 logo，尺寸组合仍是 16/32/48 |
 
 - 新 logo 原图是 1600×1600、1.58 MB。**`source/` 下的文件会被原样发布**，原图直接留在里面会让线上多出一个 1.58 MB 的下载资源，所以只保留处理后的两份，原图移出 `source/`。
 - 头像用**整幅插画等比缩放**，不裁切。中途试过「裁到头部」的做法，但头部四周一贴边，观感就像被切掉了，改回整幅缩放：头像里能看到完整的人物。
@@ -86,6 +87,19 @@
 3. ~~站点图标 `favicon.ico`~~：已完成（72.5 KB → 7.9 KB，见下）
 
 ### 站点图标重做步骤（参考：2026-09-14 已按「做法四」完成）
+
+换 logo 后的重做命令（2026-09-20 实际执行过，可照抄）：
+
+```bash
+# 1. 由 logo 原图导出三个尺寸（原图不放进 source/，否则会被原样发布）
+sips -z 16 16 logo-原图.png --out /tmp/icon-16.png
+sips -z 32 32 logo-原图.png --out /tmp/icon-32.png
+sips -z 48 48 logo-原图.png --out /tmp/icon-48.png
+# 2. 打包成多尺寸 .ico
+node tools/make-ico.mjs source/images/favicon.ico 16:/tmp/icon-16.png 32:/tmp/icon-32.png 48:/tmp/icon-48.png
+```
+
+注意：线稿类 logo 在 16×16 下必然偏淡（笔画细、白底），浏览器标签栏里的辨识度不如色块型图标；这是素材本身决定的，不是打包方式的问题。
 
 旧文件：`source/images/favicon.ico` 有 72.5 KB，里面塞了 7 个尺寸，其中 256×256 那一张就占 45 KB。**实际只需要 16/32/48 三个尺寸**，做完 7.9 KB。
 
