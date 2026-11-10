@@ -30,7 +30,7 @@ hexo.extend.generator.register('archive', function localizedArchives(locals) {
     layout: ['archives', 'page', 'list'],
     data: {
       lang,
-      posts: sortPosts(filterPosts(locals.posts, lang))
+      posts: sortPosts(filterPosts(locals.posts, lang), { sticky: false })
     }
   }));
 });

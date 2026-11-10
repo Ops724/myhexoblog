@@ -36,7 +36,8 @@ hexo.extend.helper.register('post_neighbors', function postNeighborsHelper(page)
     return { prev: null, next: null };
   }
 
-  const posts = sortPosts(filterPosts(hexo.locals.get('posts'), page.lang, page.section));
+  // 上一篇/下一篇是时间线：置顶文章不应该打断前后顺序
+  const posts = sortPosts(filterPosts(hexo.locals.get('posts'), page.lang, page.section), { sticky: false });
   const currentPath = normalizePath(page.path);
   const index = posts.findIndex(post => normalizePath(post.path) === currentPath);
 

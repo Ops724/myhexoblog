@@ -40,11 +40,22 @@ function toArray(collection) {
   return [];
 }
 
-/** 排序规则：置顶文章优先，其余按发布时间倒序。 */
-function sortPosts(posts) {
+/**
+ * 排序规则：置顶文章优先，其余按发布时间倒序。
+ *
+ * 传 { sticky: false } 时忽略置顶，严格按发布时间倒序。
+ * 归档、订阅源与上一篇/下一篇属于「时间线」，应传这个选项；
+ * 置顶只服务于首页频道、分类标签这类列表页。
+ */
+function sortPosts(posts, options = {}) {
+  const stickyFirst = options.sticky !== false;
+
   return posts.sort((left, right) => {
-    const stickyDiff = (right.sticky || 0) - (left.sticky || 0);
-    if (stickyDiff) return stickyDiff;
+    if (stickyFirst) {
+      const stickyDiff = (right.sticky || 0) - (left.sticky || 0);
+      if (stickyDiff) return stickyDiff;
+    }
+
     return right.date.valueOf() - left.date.valueOf();
   });
 }
