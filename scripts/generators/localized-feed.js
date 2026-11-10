@@ -74,7 +74,7 @@ function buildEntries(posts, config) {
 }
 
 function buildFeed({ config, profile, lang, feed }) {
-  const posts = sortPosts(filterPosts(hexo.locals.get('posts'), lang)).slice(0, FEED_LIMIT);
+  const posts = sortPosts(filterPosts(hexo.locals.get('posts'), lang), { sticky: false }).slice(0, FEED_LIMIT);
   const siteName = readProfileText(profile, 'site_name', lang) || config.title;
   const description = readProfileText(profile, 'tagline', lang) || config.description || '';
   const homeUrl = absoluteUrl(config, feed.homePath);

@@ -105,7 +105,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 
 | 文件 | 作用 |
 | --- | --- |
-| `lib/content.js` | 语言与频道归一化、按语言频道过滤、排序、查找译文 |
+| `lib/content.js` | 语言与频道归一化、按语言频道过滤、排序（`{ sticky: false }` 可忽略置顶）、查找译文 |
 | `lib/paginate.js` | 分页路由生成：第 1 页是根地址，第 N 页是 `page/N/` |
 | `lib/summary.js` | 从正文提取纯文本（含摘要截断），列表页、订阅源与搜索索引共用 |
 | `lib/site-data.js` | 读取站点资料的双语字段，模板 helper 与订阅源共用 |
@@ -222,7 +222,7 @@ Hexo 只提供「界面文案 i18n」与「按 URL 前缀识别语言」，内�
 
 ## 十二、SEO 与订阅
 
-- **订阅源**：`/atom.xml` 与 `/en/atom.xml`，由 `generators/localized-feed.js` 生成，摘要复用 `lib/summary.js`，最多 20 条。
+- **订阅源**：`/atom.xml` 与 `/en/atom.xml`，由 `generators/localized-feed.js` 生成，摘要复用 `lib/summary.js`，最多 20 条。订阅源与归档、上一篇/下一篇一样属于「时间线」，排序时传 `{ sticky: false }` 忽略置顶；置顶只作用于首页频道与分类标签这类列表页。
 - **站点地图**：`/sitemap.xml` 与 `/robots.txt`，由 `generators/localized-sitemap.js` 生成；只收录真实存在的页面，分页地址不进地图。
 - **中英对照**：文章优先按 `translation_key` 配对，其它页面按 `en` 前缀配对；**只有确认存在对应版本时才输出 `hreflang`**，避免把英文首页误当成中文文章的英文版。
 - **分享卡片**：`head.ejs` 输出 Open Graph 与 Twitter Card；分享图默认取 `profile.yml` 的头像，文章用 front-matter 的 `image` 覆盖。
